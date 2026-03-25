@@ -1,4 +1,4 @@
-d<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -147,6 +147,45 @@ d<!DOCTYPE html>
         .h-btn:active { transform: scale(.98); }
         .h-btn.success { background: var(--green); box-shadow: 0 6px 24px rgba(16,185,129,.4); }
         .h-btn.err { background: #ef4444; }
+
+        /* Field error message */
+        .field-error {
+            font-size: 12px; font-weight: 600;
+            color: #ef4444; margin-top: 6px; padding-left: 4px;
+            animation: fieldErrorIn .3s ease;
+        }
+        @keyframes fieldErrorIn { from { opacity:0; transform:translateY(-4px); } to { opacity:1; transform:translateY(0); } }
+
+        /* Spinner */
+        .btn-spinner {
+            display: inline-block; width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,.3);
+            border-top-color: #fff; border-radius: 50%;
+            animation: spin .6s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Success message replacing form */
+        .signup-success {
+            text-align: center; padding: 32px 20px;
+            background: rgba(78,42,132,.08); border: 1px solid rgba(139,92,246,.2);
+            border-radius: 20px; animation: successIn .5s ease;
+        }
+        @keyframes successIn { from { opacity:0; transform:scale(.95); } to { opacity:1; transform:scale(1); } }
+        .success-icon {
+            width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 16px;
+            background: linear-gradient(135deg, var(--purple), var(--electric));
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; font-weight: 900; color: #fff;
+            box-shadow: 0 0 30px rgba(139,92,246,.4);
+        }
+        .success-title {
+            font-size: 17px; font-weight: 800; color: #fff;
+            margin-bottom: 6px; letter-spacing: -.3px;
+        }
+        .success-sub {
+            font-size: 13px; color: var(--muted); line-height: 1.5;
+        }
 
         .sp { display: flex; align-items: center; gap: 8px; margin-top: 18px; font-size: 13px; color: var(--muted); }
         @media (max-width: 1023px) { .sp { justify-content: center; } }
@@ -301,7 +340,7 @@ d<!DOCTYPE html>
             <div class="hero-text" data-aos="fade-right" data-aos-duration="800">
                 <div class="hero-badge">
                     <div class="badge-dot"></div>
-                    Disponible en bêta
+                    Lancement fin mai 2026
                 </div>
 
                 <h1 class="hero-title">
@@ -315,12 +354,12 @@ d<!DOCTYPE html>
 
                 <form id="glowForm" class="hero-form">
                     <input type="email" id="emailInput" class="h-input" placeholder="ton@email.com" autocomplete="email" required>
-                    <button type="submit" id="submitBtn" class="h-btn">Rejoindre la bêta →</button>
+                    <button type="submit" id="submitBtn" class="h-btn">Rejoindre la liste d'attente →</button>
                 </form>
 
                 <div class="sp">
                     <div class="sp-dot"></div>
-                    <span id="proofText">+400 inscrits sur la liste d'attente</span>
+                    <span id="proofText">+400 inscrits avant le lancement</span>
                 </div>
             </div>
 
@@ -495,11 +534,14 @@ d<!DOCTYPE html>
         <a href="mailto:contact@glowapp.fr" class="f-link">Contact</a>
     </div>
     <div class="f-div"></div>
-    <div class="f-copy">© 2025 GLOW · French Riviera</div>
+    <div class="f-copy">© 2026 GLOW · French Riviera</div>
 </footer>
 
 <script>
 AOS.init({ duration: 700, easing: 'cubic-bezier(0.16,1,0.3,1)', once: true, offset: 50 });
+
+// ─── CONFIG ─────────────────────────────────────────
+const WORKER_URL = "https://glowlanding.glowappoffice.workers.dev";
 
 // Navbar scroll
 const navEl = document.querySelector('nav');
@@ -525,71 +567,126 @@ window.addEventListener('scroll', () => {
     setInterval(() => show((cur+1) % imgs.length), 3500);
 })();
 
-// Form helpers
-const BLOCKED = ['yopmail.com','temp-mail.org','guerrillamail.com','mailinator.com'];
+// ─── VALIDATION LOCALE ──────────────────────────────
+const BLOCKED = ['yopmail.com','temp-mail.org','guerrillamail.com','mailinator.com','throwaway.email','tempail.com','fakeinbox.com'];
 function validateEmail(v){
-    if(!v.includes('@') || !v.includes('.')) return 'Email invalide.';
+    if(!v || v.length < 5) return 'Email requis.';
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) return 'Format d\'email invalide.';
     const d = v.split('@')[1];
     if(BLOCKED.some(b => d.includes(b))) return 'Domaine non autorisé.';
     return null;
 }
-function setSuccess(b, i, proofId){
-    b.classList.remove('err'); b.classList.add('success');
-    b.textContent = 'Bienvenue ! 🎉';
-    i.value = ''; i.disabled = true;
-    if(proofId){ const el = document.getElementById(proofId); if(el) el.textContent = "Tu es sur la liste !"; }
+
+// ─── ERROR TOAST (sous le champ) ────────────────────
+function showFieldError(input, msg) {
+    clearFieldError(input);
+    input.classList.add('error');
+    const el = document.createElement('div');
+    el.className = 'field-error';
+    el.textContent = msg;
+    input.parentNode.insertBefore(el, input.nextSibling);
+    setTimeout(() => clearFieldError(input), 4000);
 }
-function setError(b, i, msg){
-    b.classList.add('err'); i.classList.add('error'); b.textContent = msg;
-    setTimeout(() => { b.classList.remove('err'); i.classList.remove('error'); b.textContent = b.dataset.label || 'Envoyer'; }, 3000);
+function clearFieldError(input) {
+    input.classList.remove('error');
+    const prev = input.parentNode.querySelector('.field-error');
+    if (prev) prev.remove();
 }
 
-// Hero form
-const hForm = document.getElementById('glowForm');
-const hBtn = document.getElementById('submitBtn');
-const hInput = document.getElementById('emailInput');
-hBtn.dataset.label = 'Rejoindre la bêta →';
-hForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const v = hInput.value.toLowerCase().trim();
-    const err = validateEmail(v);
-    if(err){ setError(hBtn, hInput, err); return; }
-    hBtn.textContent = '…'; hBtn.style.opacity = '.7';
-    setTimeout(() => { hBtn.style.opacity = '1'; setSuccess(hBtn, hInput, 'proofText'); }, 1200);
-});
-hInput.addEventListener('input', () => { hInput.classList.remove('error'); if(hBtn.classList.contains('err')){ hBtn.classList.remove('err'); hBtn.textContent = hBtn.dataset.label; }});
+// ─── SUCCESS : remplace le formulaire ───────────────
+function showSuccess(form, plan) {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'signup-success';
+    wrapper.innerHTML = `
+        <div class="success-icon">✓</div>
+        <p class="success-title">Bienvenue dans l'expérience Glow.</p>
+        <p class="success-sub">Tu recevras bientôt ton invitation.</p>
+    `;
+    form.replaceWith(wrapper);
+    // Met à jour le compteur hero si visible
+    const proofEl = document.getElementById('proofText');
+    if (proofEl && !proofEl.dataset.updated) {
+        proofEl.dataset.updated = '1';
+        proofEl.textContent = 'Tu es sur la liste ! 🎉';
+    }
+}
 
-// Pricing form
-const pForm = document.getElementById('pricingForm');
-const pBtn = document.getElementById('pricingBtn');
-const pEmail = document.getElementById('pricingEmail');
-pBtn.dataset.label = 'Rejoindre GLOW+ →';
-pForm.addEventListener('submit', e => {
-    e.preventDefault();
-    const v = pEmail.value.toLowerCase().trim();
-    const err = validateEmail(v);
-    if(err){ setError(pBtn, pEmail, err); return; }
-    pBtn.textContent = '…'; pBtn.style.opacity = '.7';
-    setTimeout(() => { pBtn.style.opacity = '1'; setSuccess(pBtn, pEmail, null); }, 1200);
-});
-pEmail.addEventListener('input', () => { pEmail.classList.remove('error'); if(pBtn.classList.contains('err')){ pBtn.classList.remove('err'); pBtn.textContent = pBtn.dataset.label; }});
+// ─── APPEL WORKER ───────────────────────────────────
+async function subscribe(email, plan, btn, input, form) {
+    const originalLabel = btn.dataset.label || btn.textContent;
 
-// Free form
-const fForm = document.getElementById('glowFreeForm');
-const fBtn = document.getElementById('freeBtn');
-const fEmail = document.getElementById('freeEmail');
-fBtn.dataset.label = "S'inscrire →";
-if(fForm){
-    fForm.addEventListener('submit', e => {
+    // Loading state
+    btn.disabled = true;
+    btn.textContent = '';
+    btn.innerHTML = '<span class="btn-spinner"></span>';
+    btn.style.opacity = '.75';
+
+    try {
+        const res = await fetch(`${WORKER_URL}/subscribe`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, plan }),
+        });
+        const data = await res.json();
+
+        btn.style.opacity = '1';
+        btn.disabled = false;
+        btn.innerHTML = '';
+
+        if (res.ok && data.ok) {
+            showSuccess(form, plan);
+        } else if (res.status === 409) {
+            // Déjà inscrit → on considère ça comme un succès
+            showSuccess(form, plan);
+        } else {
+            showFieldError(input, data.error || 'Erreur. Réessaie.');
+            btn.textContent = originalLabel;
+        }
+    } catch (e) {
+        btn.style.opacity = '1';
+        btn.disabled = false;
+        btn.innerHTML = '';
+        btn.textContent = originalLabel;
+        showFieldError(input, 'Erreur réseau. Vérifie ta connexion.');
+    }
+}
+
+// ─── WIRE UP FORMS ──────────────────────────────────
+function wireForm(formId, btnId, inputId, plan, label) {
+    const form = document.getElementById(formId);
+    const btn = document.getElementById(btnId);
+    const input = document.getElementById(inputId);
+    if (!form || !btn || !input) return;
+
+    btn.dataset.label = label;
+
+    form.addEventListener('submit', e => {
         e.preventDefault();
-        const v = fEmail.value.toLowerCase().trim();
+        clearFieldError(input);
+        const v = input.value.toLowerCase().trim();
         const err = validateEmail(v);
-        if(err){ setError(fBtn, fEmail, err); return; }
-        fBtn.textContent = '…'; fBtn.style.opacity = '.7';
-        setTimeout(() => { fBtn.style.opacity = '1'; setSuccess(fBtn, fEmail, null); }, 1200);
+        if (err) { showFieldError(input, err); return; }
+        subscribe(v, plan, btn, input, form);
     });
-    fEmail.addEventListener('input', () => { fEmail.classList.remove('error'); if(fBtn.classList.contains('err')){ fBtn.classList.remove('err'); fBtn.textContent = fBtn.dataset.label; }});
+
+    input.addEventListener('input', () => clearFieldError(input));
 }
+
+wireForm('glowForm',     'submitBtn',   'emailInput',    'waitlist', 'Rejoindre la liste d\'attente →');
+wireForm('glowFreeForm', 'freeBtn',     'freeEmail',     'free',     'S\'inscrire →');
+wireForm('pricingForm',  'pricingBtn',  'pricingEmail',  'glow+',    'Rejoindre GLOW+ →');
+
+// ─── LIVE COUNTER (optionnel) ───────────────────────
+(async function loadCount(){
+    try {
+        const res = await fetch(`${WORKER_URL}/count`);
+        const data = await res.json();
+        if (data.ok && data.count > 0) {
+            const el = document.getElementById('proofText');
+            if (el && !el.dataset.updated) el.textContent = `+${data.count} inscrits avant le lancement`;
+        }
+    } catch(e) { /* silencieux */ }
+})();
 </script>
 </body>
 </html>
