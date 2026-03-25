@@ -1,0 +1,7 @@
+name = "glowlanding"
+main = "index.js"
+compatibility_date = "2024-12-01"
+
+[[kv_namespaces]]
+binding = "GLOW_STORAGE"
+id = "77932865eadc42c385d81f473ebf15da"

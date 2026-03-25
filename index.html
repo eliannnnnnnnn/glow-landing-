@@ -329,7 +329,7 @@
         GLOW
     </a>
     <div class="nav-tag">Côte d'Azur</div>
-    <a href="#pricing" class="nav-cta">Télécharger</a>
+    <a href="#pricing" class="nav-cta">Nos offres</a>
 </nav>
 
 <!-- HERO -->
@@ -490,10 +490,7 @@
                     <li><div class="pcheck pcheck-green">✓</div>Events & réservation de tickets</li>
                     <li><div class="pcheck pcheck-green">✓</div>Followers & following</li>
                 </ul>
-                <form id="glowFreeForm">
-                    <input type="email" id="freeEmail" class="h-input" placeholder="ton@email.com" style="margin-bottom:10px" required>
-                    <button type="submit" id="freeBtn" class="pc-btn pc-btn-free">S'inscrire →</button>
-                </form>
+                <a href="#hero" class="pc-btn pc-btn-free" style="display:block;text-align:center;text-decoration:none;">S'inscrire →</a>
                 <p class="pc-note">Aucune carte bancaire</p>
             </div>
 
@@ -514,10 +511,7 @@
                     <li><div class="pcheck pcheck-gold">✦</div>Events privés & soirées GLOW</li>
                     <li><div class="pcheck pcheck-gold">✦</div>3 tiers : Plus · VIP · Ultra</li>
                 </ul>
-                <form id="pricingForm">
-                    <input type="email" id="pricingEmail" class="h-input" placeholder="ton@email.com" style="margin-bottom:10px" required>
-                    <button type="submit" id="pricingBtn" class="pc-btn pc-btn-plus">Rejoindre GLOW+ →</button>
-                </form>
+                <a href="#hero" class="pc-btn pc-btn-plus" style="display:block;text-align:center;text-decoration:none;">Rejoindre GLOW+ →</a>
                 <p class="pc-note">Sans engagement · Résiliation en 1 clic</p>
             </div>
         </div>
@@ -672,9 +666,7 @@ function wireForm(formId, btnId, inputId, plan, label) {
     input.addEventListener('input', () => clearFieldError(input));
 }
 
-wireForm('glowForm',     'submitBtn',   'emailInput',    'waitlist', 'Rejoindre la liste d\'attente →');
-wireForm('glowFreeForm', 'freeBtn',     'freeEmail',     'free',     'S\'inscrire →');
-wireForm('pricingForm',  'pricingBtn',  'pricingEmail',  'glow+',    'Rejoindre GLOW+ →');
+wireForm('glowForm', 'submitBtn', 'emailInput', 'waitlist', 'Rejoindre la liste d\'attente →');
 
 // ─── LIVE COUNTER (optionnel) ───────────────────────
 (async function loadCount(){
