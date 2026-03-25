@@ -191,24 +191,173 @@
         @media (max-width: 1023px) { .sp { justify-content: center; } }
         .sp-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
 
-        /* iPhone */
+        /* 3D SCENE */
         .hero-visual { flex: 1; display: flex; justify-content: center; align-items: center; }
-        .iphone-wrap { position: relative; }
-        .iphone {
-            width: 260px; height: 540px; border-radius: 44px;
-            background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
-            border: 2px solid rgba(255,255,255,.1);
-            position: relative; overflow: hidden;
-            box-shadow: 0 60px 100px -20px rgba(0,0,0,.8), 0 0 60px rgba(78,42,132,.2);
+        .scene-3d {
+            width: 400px; height: 400px;
+            position: relative;
+            perspective: 900px;
         }
-        @media (max-width: 1023px) { .iphone { width: 220px; height: 453px; border-radius: 38px; } }
-        .iphone-notch { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 26px; background: #090910; border-radius: 0 0 16px 16px; z-index: 10; }
-        .iphone-screen { position: absolute; inset: 0; overflow: hidden; }
-        .iphone-screen img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; opacity: 0; transition: opacity .8s ease; z-index: 1; }
-        .iphone-screen img.active { opacity: 1; z-index: 2; }
-        .carousel-dots { display: flex; gap: 6px; justify-content: center; margin-top: 16px; }
-        .carousel-dots span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.15); transition: all .4s; cursor: pointer; }
-        .carousel-dots span.active { background: var(--electric); box-shadow: 0 0 8px var(--electric); width: 22px; border-radius: 4px; }
+        @media (max-width: 1023px) { .scene-3d { width: 320px; height: 320px; } }
+        @media (max-width: 600px)  { .scene-3d { width: 260px; height: 260px; } }
+
+        /* Glow ambiant derrière la scène */
+        .scene-glow {
+            position: absolute; inset: -40%; border-radius: 50%;
+            background: radial-gradient(circle, rgba(139,92,246,.18) 0%, transparent 70%);
+            filter: blur(40px); z-index: 0; animation: sceneGlowPulse 5s ease-in-out infinite;
+        }
+        @keyframes sceneGlowPulse {
+            0%,100% { opacity:.6; transform:scale(1); }
+            50% { opacity:1; transform:scale(1.08); }
+        }
+
+        /* Container 3D qui tourne lentement */
+        .scene-orbit {
+            position: absolute; inset: 0;
+            transform-style: preserve-3d;
+            animation: sceneOrbit 20s linear infinite;
+        }
+        @keyframes sceneOrbit {
+            from { transform: rotateY(0deg) rotateX(-8deg); }
+            to   { transform: rotateY(360deg) rotateX(-8deg); }
+        }
+
+        /* Torus principal (anneau en CSS) */
+        .torus {
+            position: absolute; top: 50%; left: 50%;
+            width: 240px; height: 240px;
+            margin: -120px 0 0 -120px;
+            border-radius: 50%;
+            border: 28px solid transparent;
+            border-top-color: var(--electric);
+            border-right-color: rgba(167,139,250,.6);
+            border-bottom-color: rgba(139,92,246,.3);
+            border-left-color: var(--neon);
+            transform: rotateX(70deg);
+            box-shadow:
+                0 0 40px rgba(139,92,246,.3),
+                inset 0 0 30px rgba(139,92,246,.15);
+            filter: blur(0.5px);
+        }
+        @media (max-width: 600px) {
+            .torus { width: 180px; height: 180px; margin: -90px 0 0 -90px; border-width: 22px; }
+        }
+
+        /* Sphère glassmorphism */
+        .glass-sphere {
+            position: absolute; top: 50%; left: 50%;
+            width: 100px; height: 100px; margin: -50px 0 0 -50px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%,
+                rgba(167,139,250,.4),
+                rgba(78,42,132,.15) 60%,
+                rgba(5,5,8,.3));
+            border: 1px solid rgba(167,139,250,.25);
+            backdrop-filter: blur(6px);
+            box-shadow:
+                0 0 50px rgba(139,92,246,.25),
+                inset 0 0 30px rgba(255,255,255,.05),
+                inset -15px -15px 30px rgba(78,42,132,.2);
+            animation: sphereFloat 6s ease-in-out infinite;
+        }
+        @keyframes sphereFloat {
+            0%,100% { transform: translateY(0) scale(1); }
+            50%     { transform: translateY(-12px) scale(1.04); }
+        }
+
+        /* Cube flottant (petit accent) */
+        .float-cube {
+            position: absolute;
+            width: 44px; height: 44px;
+            transform-style: preserve-3d;
+        }
+        .float-cube .face {
+            position: absolute; width: 44px; height: 44px;
+            border-radius: 10px;
+            border: 1px solid rgba(139,92,246,.2);
+        }
+        .float-cube .f-front  { background: rgba(139,92,246,.1);  transform: translateZ(22px); }
+        .float-cube .f-back   { background: rgba(78,42,132,.08);  transform: translateZ(-22px) rotateY(180deg); }
+        .float-cube .f-left   { background: rgba(167,139,250,.08);transform: translateX(-22px) rotateY(-90deg); }
+        .float-cube .f-right  { background: rgba(139,92,246,.12); transform: translateX(22px)  rotateY(90deg); }
+        .float-cube .f-top    { background: rgba(167,139,250,.15);transform: translateY(-22px) rotateX(90deg); }
+        .float-cube .f-bottom { background: rgba(78,42,132,.06);  transform: translateY(22px)  rotateX(-90deg); }
+
+        .cube-1 {
+            top: 12%; right: 8%;
+            animation: cubeFloat1 7s ease-in-out infinite;
+        }
+        @keyframes cubeFloat1 {
+            0%,100% { transform: rotateX(25deg) rotateY(25deg) translateY(0); }
+            50%     { transform: rotateX(45deg) rotateY(65deg) translateY(-18px); }
+        }
+        .cube-2 {
+            bottom: 15%; left: 10%;
+            animation: cubeFloat2 9s ease-in-out infinite;
+        }
+        @keyframes cubeFloat2 {
+            0%,100% { transform: rotateX(-20deg) rotateY(30deg) translateY(0); }
+            50%     { transform: rotateX(10deg) rotateY(80deg) translateY(-14px); }
+        }
+
+        /* Petits orbes flottants */
+        .orb {
+            position: absolute; border-radius: 50%;
+            box-shadow: 0 0 20px currentColor;
+            opacity: .6;
+        }
+        .orb-1 {
+            width: 14px; height: 14px; top: 20%; left: 18%;
+            background: var(--electric); color: var(--electric);
+            animation: orbFloat 5s ease-in-out infinite;
+        }
+        .orb-2 {
+            width: 10px; height: 10px; bottom: 25%; right: 15%;
+            background: var(--neon); color: var(--neon);
+            animation: orbFloat 6.5s ease-in-out infinite reverse;
+        }
+        .orb-3 {
+            width: 8px; height: 8px; top: 60%; left: 8%;
+            background: #e879f9; color: #e879f9;
+            animation: orbFloat 4.5s ease-in-out infinite 1s;
+        }
+        .orb-4 {
+            width: 12px; height: 12px; top: 10%; right: 28%;
+            background: var(--gold); color: var(--gold);
+            animation: orbFloat 7s ease-in-out infinite .5s;
+        }
+        @keyframes orbFloat {
+            0%,100% { transform: translateY(0) scale(1); opacity:.5; }
+            50%     { transform: translateY(-20px) scale(1.2); opacity:.9; }
+        }
+
+        /* Anneaux fins décoratifs */
+        .ring-deco {
+            position: absolute; border-radius: 50%;
+            border: 1px solid rgba(139,92,246,.12);
+        }
+        .ring-1 {
+            width: 320px; height: 320px; top: 50%; left: 50%;
+            margin: -160px 0 0 -160px;
+            transform: rotateX(75deg);
+            animation: ringPulse 8s ease-in-out infinite;
+        }
+        .ring-2 {
+            width: 360px; height: 360px; top: 50%; left: 50%;
+            margin: -180px 0 0 -180px;
+            border-color: rgba(167,139,250,.06);
+            transform: rotateX(75deg) rotateZ(30deg);
+            animation: ringPulse 10s ease-in-out infinite 2s;
+        }
+        @keyframes ringPulse {
+            0%,100% { opacity:.3; transform: rotateX(75deg) scale(1); }
+            50%     { opacity:.7; transform: rotateX(75deg) scale(1.05); }
+        }
+        @media (max-width: 600px) {
+            .ring-1 { width: 240px; height: 240px; margin: -120px 0 0 -120px; }
+            .ring-2 { width: 270px; height: 270px; margin: -135px 0 0 -135px; }
+        }
 
         /* SECTION TITLES */
         .s-tag { display: inline-block; padding: 5px 14px; border-radius: 99px; background: rgba(78,42,132,.15); border: 1px solid rgba(139,92,246,.2); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--neon); margin-bottom: 16px; }
@@ -366,18 +515,36 @@
             </div>
 
             <div class="hero-visual" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
-                <div class="iphone-wrap">
-                    <div class="iphone" id="heroPhone">
-                        <div class="iphone-notch"></div>
-                        <div class="iphone-screen">
-                            <img src="screens/screen1.png" alt="GLOW Events" class="active">
-                            <img src="screens/screen3.png" alt="GLOW Profile">
-                            <img src="screens/screen4.png" alt="GLOW Chat">
-                        </div>
+                <div class="scene-3d">
+                    <div class="scene-glow"></div>
+
+                    <!-- Anneaux fins décoratifs -->
+                    <div class="ring-deco ring-1"></div>
+                    <div class="ring-deco ring-2"></div>
+
+                    <!-- Orbite 3D : torus + sphère -->
+                    <div class="scene-orbit">
+                        <div class="torus"></div>
                     </div>
-                    <div class="carousel-dots" id="heroDots">
-                        <span class="active"></span><span></span><span></span>
+                    <div class="glass-sphere"></div>
+
+                    <!-- Cubes flottants -->
+                    <div class="float-cube cube-1">
+                        <div class="face f-front"></div><div class="face f-back"></div>
+                        <div class="face f-left"></div><div class="face f-right"></div>
+                        <div class="face f-top"></div><div class="face f-bottom"></div>
                     </div>
+                    <div class="float-cube cube-2">
+                        <div class="face f-front"></div><div class="face f-back"></div>
+                        <div class="face f-left"></div><div class="face f-right"></div>
+                        <div class="face f-top"></div><div class="face f-bottom"></div>
+                    </div>
+
+                    <!-- Orbes -->
+                    <div class="orb orb-1"></div>
+                    <div class="orb orb-2"></div>
+                    <div class="orb orb-3"></div>
+                    <div class="orb orb-4"></div>
                 </div>
             </div>
         </div>
@@ -558,24 +725,6 @@ const navEl = document.querySelector('nav');
 window.addEventListener('scroll', () => {
     navEl.style.background = window.scrollY > 40 ? 'rgba(5,5,8,.95)' : 'rgba(5,5,8,.7)';
 });
-
-// Hero carousel
-(function(){
-    const phone = document.getElementById('heroPhone');
-    if(!phone) return;
-    const imgs = phone.querySelectorAll('.iphone-screen img');
-    const dots = document.querySelectorAll('#heroDots span');
-    let cur = 0;
-    function show(i){
-        imgs.forEach(im => im.classList.remove('active'));
-        dots.forEach(d => d.classList.remove('active'));
-        imgs[i].classList.add('active');
-        dots[i].classList.add('active');
-        cur = i;
-    }
-    dots.forEach((d,i) => d.addEventListener('click', () => show(i)));
-    setInterval(() => show((cur+1) % imgs.length), 3500);
-})();
 
 // ─── VALIDATION LOCALE ──────────────────────────────
 const BLOCKED = ['yopmail.com','temp-mail.org','guerrillamail.com','mailinator.com','throwaway.email','tempail.com','fakeinbox.com'];
