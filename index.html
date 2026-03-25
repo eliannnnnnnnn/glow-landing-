@@ -85,11 +85,19 @@
             min-height: 100vh; padding: 140px 0 80px;
             display: flex; align-items: center; position: relative; overflow: hidden;
         }
-        .hero-glow {
-            position: absolute; width: 900px; height: 500px;
-            background: radial-gradient(ellipse at 60% 40%, rgba(78,42,132,.2), rgba(139,92,246,.06) 50%, transparent 80%);
-            top: -150px; right: -200px; z-index: 0; filter: blur(120px);
-            opacity: .6;
+        /* Ambient light lines at top of hero */
+        #hero::before {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(139,92,246,.3) 30%, rgba(167,139,250,.15) 50%, rgba(139,92,246,.3) 70%, transparent);
+            z-index: 1;
+        }
+        #hero::after {
+            content: '';
+            position: absolute; top: 0; left: 20%; right: 20%; height: 200px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(78,42,132,.12), transparent 70%);
+            filter: blur(40px);
+            z-index: 0; pointer-events: none;
         }
         .hero-inner {
             position: relative; z-index: 2;
@@ -469,7 +477,6 @@
 
 <!-- HERO -->
 <section id="hero">
-    <div class="hero-glow"></div>
     <div class="sw" style="width:100%">
         <div class="hero-inner">
             <div class="hero-text" data-aos="fade-right" data-aos-duration="800">
