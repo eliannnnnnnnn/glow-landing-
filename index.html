@@ -300,56 +300,27 @@
             border-radius: 38px;
         }
 
-        /* Petites notifications flottantes */
-        .notif-bubble {
-            position: absolute; z-index: 10;
-            padding: 8px 14px;
-            border-radius: 14px;
-            background: rgba(10,10,20,.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(139,92,246,.2);
-            display: flex; align-items: center; gap: 8px;
-            font-size: 12px; font-weight: 600; color: rgba(255,255,255,.85);
+        /* Feature chips under phone */
+        .phone-features {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+            margin-top: 24px; position: relative; z-index: 10;
+        }
+        .phone-chip {
+            display: flex; align-items: center; gap: 6px;
+            padding: 7px 14px;
+            border-radius: 99px;
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.07);
+            font-size: 12px; font-weight: 600;
+            color: rgba(255,255,255,.55);
             white-space: nowrap;
-            box-shadow: 0 8px 30px rgba(0,0,0,.4);
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
+            transition: border-color .3s, color .3s;
         }
-        .notif-icon {
-            width: 28px; height: 28px; border-radius: 9px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 14px; flex-shrink: 0;
+        .phone-chip:hover {
+            border-color: rgba(139,92,246,.3);
+            color: rgba(255,255,255,.8);
         }
-
-        .notif-1 {
-            top: 12%; right: -30px;
-            animation: notifFloat1 5s ease-in-out infinite;
-        }
-        .notif-1 .notif-icon { background: rgba(139,92,246,.2); }
-        @keyframes notifFloat1 {
-            0%,100% { transform: translateY(0) rotate(2deg); opacity:.8; }
-            50%     { transform: translateY(-10px) rotate(0deg); opacity:1; }
-        }
-
-        .notif-2 {
-            bottom: 22%; left: -35px;
-            animation: notifFloat2 6s ease-in-out infinite .5s;
-        }
-        .notif-2 .notif-icon { background: rgba(245,158,11,.15); }
-        @keyframes notifFloat2 {
-            0%,100% { transform: translateY(0) rotate(-1deg); opacity:.75; }
-            50%     { transform: translateY(-12px) rotate(1deg); opacity:1; }
-        }
-
-        .notif-3 {
-            top: 55%; right: -25px;
-            animation: notifFloat3 5.5s ease-in-out infinite 1s;
-        }
-        .notif-3 .notif-icon { background: rgba(16,185,129,.15); }
-        @keyframes notifFloat3 {
-            0%,100% { transform: translateY(0) rotate(1deg); opacity:.7; }
-            50%     { transform: translateY(-8px) rotate(-1deg); opacity:1; }
-        }
+        .phone-chip ion-icon { font-size: 14px; }
 
         /* SECTION TITLES */
         .s-tag { display: inline-block; padding: 5px 14px; border-radius: 99px; background: rgba(78,42,132,.15); border: 1px solid rgba(139,92,246,.2); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--neon); margin-bottom: 16px; }
@@ -524,18 +495,25 @@
                         <div class="phone-reflection"></div>
                     </div>
 
-                    <!-- Notifications flottantes -->
-                    <div class="notif-bubble notif-1">
-                        <div class="notif-icon"><ion-icon name="location" style="color:var(--neon);"></ion-icon></div>
-                        12 spots autour de toi
+                </div>
+
+                <!-- Feature chips sous le phone -->
+                <div class="phone-features">
+                    <div class="phone-chip">
+                        <ion-icon name="map-outline" style="color:var(--neon);"></ion-icon>
+                        Carte live
                     </div>
-                    <div class="notif-bubble notif-2">
-                        <div class="notif-icon"><ion-icon name="pricetag" style="color:var(--gold);"></ion-icon></div>
-                        −30% chez le partenaire
+                    <div class="phone-chip">
+                        <ion-icon name="chatbubble-outline" style="color:rgba(0,229,255,.7);"></ion-icon>
+                        Chat
                     </div>
-                    <div class="notif-bubble notif-3">
-                        <div class="notif-icon"><ion-icon name="people" style="color:var(--green);"></ion-icon></div>
-                        3 amis sont là-bas
+                    <div class="phone-chip">
+                        <ion-icon name="flame-outline" style="color:#f87171;"></ion-icon>
+                        Events
+                    </div>
+                    <div class="phone-chip">
+                        <ion-icon name="pricetag-outline" style="color:var(--gold);"></ion-icon>
+                        Réduc'
                     </div>
                 </div>
             </div>
