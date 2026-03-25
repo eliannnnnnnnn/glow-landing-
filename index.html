@@ -307,41 +307,8 @@
         .s-title { font-size: clamp(28px, 4.5vw, 50px); font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin-bottom: 12px; }
         .s-sub { font-size: 17px; color: var(--muted); line-height: 1.6; }
 
-        /* SCREENSHOTS */
-        .phones-section { padding: 80px 0 60px; overflow: hidden; }
-        .phones-belt {
-            display: flex; gap: 16px; margin-top: 44px;
-            animation: phonesBelt 35s linear infinite;
-            width: max-content;
-        }
-        @keyframes phonesBelt { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-        .phone-3d {
-            width: 170px; height: 350px; border-radius: 28px; overflow: hidden; flex-shrink: 0;
-            background: #0f0f1a;
-            border: 1.5px solid rgba(255,255,255,.06);
-            box-shadow: 0 20px 50px -10px rgba(0,0,0,.6);
-            transition: transform .4s ease, border-color .3s;
-            position: relative;
-        }
-        .phone-3d img { width: 100%; height: 100%; object-fit: cover; display: block; }
-        .phone-3d:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(139,92,246,.4);
-        }
-        .phone-3d-label {
-            position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
-            padding: 4px 12px; border-radius: 8px;
-            background: rgba(5,5,8,.8); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.08);
-            font-size: 10px; font-weight: 700; color: rgba(255,255,255,.5);
-            text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;
-        }
-        @media (max-width: 767px) {
-            .phone-3d { width: 140px; height: 288px; border-radius: 22px; }
-            .phones-belt { gap: 12px; }
-        }
-
         /* FEATURES */
-        .features-section { padding: 40px 0 100px; }
+        .features-section { padding: 80px 0 100px; }
         .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
         @media (max-width: 1023px) { .feat-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 600px)  { .feat-grid { grid-template-columns: 1fr; } }
@@ -478,30 +445,6 @@
                 </div>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- APP SCREENSHOTS -->
-<section class="phones-section">
-    <div class="sw">
-        <div style="text-align:center;max-width:520px;margin:0 auto" data-aos="fade-up">
-            <div class="s-tag">L'app</div>
-            <h2 class="s-title">Voilà à quoi ça ressemble</h2>
-        </div>
-    </div>
-    <div class="phones-belt" data-aos="fade-up" data-aos-delay="80">
-        <div class="phone-3d"><img src="screens/screen1.png" alt="Events"><div class="phone-3d-label">Events</div></div>
-        <div class="phone-3d"><img src="screens/screen2.png" alt="Map"><div class="phone-3d-label">Carte</div></div>
-        <div class="phone-3d"><img src="screens/screen3.png" alt="Profile"><div class="phone-3d-label">Profil</div></div>
-        <div class="phone-3d"><img src="screens/screen4.png" alt="Chat"><div class="phone-3d-label">Chat</div></div>
-        <div class="phone-3d"><img src="screens/screen5.png" alt="Stories"><div class="phone-3d-label">Stories</div></div>
-        <div class="phone-3d"><img src="screens/screen6.png" alt="Premium"><div class="phone-3d-label">GLOW+</div></div>
-        <div class="phone-3d"><img src="screens/screen1.png" alt="Events"><div class="phone-3d-label">Events</div></div>
-        <div class="phone-3d"><img src="screens/screen2.png" alt="Map"><div class="phone-3d-label">Carte</div></div>
-        <div class="phone-3d"><img src="screens/screen3.png" alt="Profile"><div class="phone-3d-label">Profil</div></div>
-        <div class="phone-3d"><img src="screens/screen4.png" alt="Chat"><div class="phone-3d-label">Chat</div></div>
-        <div class="phone-3d"><img src="screens/screen5.png" alt="Stories"><div class="phone-3d-label">Stories</div></div>
-        <div class="phone-3d"><img src="screens/screen6.png" alt="Premium"><div class="phone-3d-label">GLOW+</div></div>
     </div>
 </section>
 
