@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>GLOW — La French Riviera t'appartient.</title>
-    <meta name="description" content="Accede aux meilleurs bars, clubs et beach clubs de la Cote d'Azur avec des reductions exclusives et des avantages VIP.">
+    <title>GLOW — La nuit niçoise t'appartient.</title>
+    <meta name="description" content="L'app sociale de la nuit à Nice. Carte interactive des spots, stories éphémères, chat entre amis, événements exclusifs et réductions GLOW+ chez les partenaires.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,9 +16,6 @@
     <!-- AOS Scroll Animations -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-    <!-- Spline 3D -->
-    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.0.53/build/spline-viewer.js"></script>
 
     <style>
         :root {
@@ -158,82 +155,12 @@
         }
         @keyframes orbFloat { 0%,100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-40px) scale(1.06); } }
 
-        .hero-spline {
-            position: relative; z-index: 2;
-            width: 100%; max-width: 580px; height: 520px;
-            margin: 0 auto 40px;
-            border-radius: 32px; overflow: hidden;
-            background: radial-gradient(circle at 50% 50%, rgba(78,42,132,.25), transparent 70%);
-            opacity: 0; transform: translateY(30px) scale(.97);
-            animation: splineReveal 1.2s cubic-bezier(.16,1,.3,1) .8s forwards;
-            cursor: grab;
-        }
-        .hero-spline:active { cursor: grabbing; }
-        .hero-spline spline-viewer {
-            width: 100%; height: 100%; display: block;
-            border-radius: 32px;
-        }
-        .hero-spline::before {
-            content: ''; position: absolute; inset: -3px; z-index: -1;
-            border-radius: 34px;
-            background: conic-gradient(from 0deg, var(--purple), var(--electric), var(--neon), var(--purple));
-            opacity: .35; filter: blur(18px);
-            animation: splineRingRotate 6s linear infinite;
-        }
-        .hero-spline::after {
-            content: ''; position: absolute; inset: 0; z-index: 10;
-            border-radius: 32px; pointer-events: none;
-            border: 1px solid rgba(139,92,246,.25);
-            box-shadow: inset 0 0 60px rgba(78,42,132,.2), 0 20px 80px rgba(78,42,132,.35);
-        }
-        @keyframes splineReveal { to { opacity: 1; transform: translateY(0) scale(1); } }
-        @keyframes splineRingRotate { to { filter: blur(18px) hue-rotate(360deg); } }
-        .spline-hint {
-            position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 12;
-            display: flex; align-items: center; gap: 8px;
-            padding: 8px 18px; border-radius: 99px;
-            background: rgba(5,5,8,.7); border: 1px solid rgba(139,92,246,.3);
-            backdrop-filter: blur(12px); font-size: 12px; font-weight: 600;
-            color: rgba(255,255,255,.6); pointer-events: none;
-            animation: hintFade 4s ease-in-out forwards;
-        }
-        .spline-hint .hint-icon { animation: hintWiggle 1.5s ease-in-out infinite; display: inline-block; }
-        @keyframes hintFade { 0%,80% { opacity: 1; } 100% { opacity: 0; visibility: hidden; } }
-        @keyframes hintWiggle { 0%,100% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 75% { transform: rotate(15deg); } }
-        .hero-spline .spline-loader {
-            position: absolute; inset: 0; z-index: 5;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
-            background: rgba(5,5,8,.9); border-radius: 32px;
-            transition: opacity .6s, visibility .6s;
-        }
-        .hero-spline .spline-loader.loaded { opacity: 0; visibility: hidden; pointer-events: none; }
-        .spline-loader-ring {
-            width: 44px; height: 44px; border-radius: 50%;
-            border: 3px solid rgba(139,92,246,.15);
-            border-top-color: var(--electric);
-            animation: spin .8s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .spline-loader-text { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
-        @media (max-width: 1023px) {
-            .hero-spline { max-width: 420px; height: 380px; }
-        }
-        @media (max-width: 600px) {
-            .hero-spline { max-width: 100%; height: 300px; margin-bottom: 24px; border-radius: 24px; }
-            .hero-spline::before { border-radius: 26px; }
-            .hero-spline::after { border-radius: 24px; }
-            .spline-hint { font-size: 11px; padding: 6px 14px; }
-        }
-
         .hero-inner {
             position: relative; z-index: 2;
-            display: flex; flex-direction: column; align-items: center; width: 100%;
-        }
-        .hero-bottom {
             display: flex; align-items: center; gap: 60px; width: 100%;
         }
         @media (max-width: 1023px) {
-            .hero-bottom { flex-direction: column; text-align: center; gap: 48px; }
+            .hero-inner { flex-direction: column; text-align: center; gap: 48px; }
         }
 
         .hero-text { flex: 1; max-width: 560px; }
@@ -333,7 +260,7 @@
 
         .fc { position: absolute; padding: 12px 16px; border-radius: 16px; background: rgba(8,8,16,.8); border: 1px solid var(--glass-bdr); backdrop-filter: blur(20px); font-size: 12px; white-space: nowrap; box-shadow: 0 8px 32px rgba(0,0,0,.5); z-index: 10; }
         .fc-d { top: 70px; right: -80px; border-color: rgba(245,158,11,.4); animation: fcF1 5s ease-in-out infinite; }
-        .fc-d strong { color: var(--gold-lt); font-size: 22px; font-weight: 900; display: block; }
+        .fc-d strong { color: var(--gold-lt); font-size: 18px; font-weight: 900; display: block; }
         .fc-d span   { color: var(--muted); }
         .fc-l { bottom: 130px; left: -85px; animation: fcF2 6s ease-in-out infinite; }
         .fc-l .ldot { width: 7px; height: 7px; border-radius: 50%; background: #ef4444; box-shadow: 0 0 8px #ef4444; display: inline-block; margin-right: 6px; animation: bdPulse 1.5s infinite; }
@@ -382,10 +309,10 @@
         /* ── BENTO ─────────────────────── */
         .features-section { padding: 40px 0 120px; }
         .bento-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 70px; }
-        @media (max-width: 1023px) { .bento-grid { grid-template-columns: 1fr 1fr; } .bb1,.bb4 { grid-column: span 2; } }
+        @media (max-width: 1023px) { .bento-grid { grid-template-columns: 1fr 1fr; } .bb1 { grid-column: span 2; } .bb4 { grid-column: span 2; } }
         @media (max-width: 600px)  { .bento-grid { grid-template-columns: 1fr; } .bb1,.bb4 { grid-column: span 1; } }
-        .bb1 { grid-column: span 2; }
-        .bb4 { grid-column: span 2; }
+        .bb1 { grid-column: span 1; }
+        .bb4 { grid-column: span 1; }
         .bento-card {
             position: relative; overflow: hidden; border-radius: 28px; min-height: 280px;
             background: var(--bg2); border: 1px solid var(--glass-bdr);
@@ -418,6 +345,7 @@
         .mdot:nth-child(3) { animation-delay: .8s; }
         .mdot:nth-child(4) { animation-delay: 1.2s; }
         .mdot:nth-child(5) { animation-delay: 1.6s; }
+        .mdot:nth-child(6) { animation-delay: 2s; }
 
         /* QR */
         .bqr { background: #080812; }
@@ -531,8 +459,8 @@
         <img src="logo.jpg" alt="GLOW" onerror="this.style.display='none'">
         GLOW
     </a>
-    <div class="nav-tag">Nice &bull; Cannes &bull; Monaco</div>
-    <a href="#waitlist" class="nav-cta">Accès Gratuit</a>
+    <div class="nav-tag">&#128205; Nice · Bientôt toute la Riviera</div>
+    <a href="#waitlist" class="nav-cta">Découvrir GLOW</a>
 </nav>
 
 <!-- HERO -->
@@ -543,73 +471,49 @@
     <div class="sw" style="width:100%">
         <div class="hero-inner">
 
-            <!-- 3D Spline — Élément Central Interactif -->
-            <div class="hero-spline" id="splineContainer" data-aos="zoom-in" data-aos-duration="1000">
-                <div class="spline-loader" id="splineLoader">
-                    <div class="spline-loader-ring"></div>
-                    <div class="spline-loader-text">Chargement 3D...</div>
+            <!-- Text -->
+            <div class="hero-text" data-aos="fade-right" data-aos-duration="900">
+                <div class="hero-badge">
+                    <div class="badge-dot"></div>
+                    Bêta — Accès anticipé ouvert
                 </div>
-                <spline-viewer
-                    id="splineViewer"
-                    url="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode"
-                    style="width:100%;height:100%;"
-                    loading="lazy"
-                ></spline-viewer>
-                <div class="spline-hint" id="splineHint">
-                    <span class="hint-icon">&#128070;</span>
-                    Interagis avec la scene 3D
+
+                <h1 class="hero-title">
+                    <span class="t1">La nuit niçoise</span>
+                    <span class="t2">t'appartient.</span>
+                </h1>
+
+                <p class="hero-sub">
+                    L'app sociale de la nuit à Nice. Carte interactive des spots, stories éphémères entre amis, chat en temps réel, événements exclusifs et réductions avec GLOW+.
+                </p>
+
+                <form id="glowForm" class="hero-form">
+                    <input type="email" id="emailInput" class="h-input" placeholder="votre@email.com" autocomplete="email" required>
+                    <button type="submit" id="submitBtn" class="h-btn">Rejoindre GLOW &rarr;</button>
+                </form>
+
+                <div class="sp">
+                    <div class="sp-dot"></div>
+                    <span id="proofText">412 personnes sont sur la liste d'attente.</span>
                 </div>
             </div>
 
-            <!-- Contenu texte + mockup -->
-            <div class="hero-bottom">
-
-                <!-- Text -->
-                <div class="hero-text" data-aos="fade-right" data-aos-duration="900">
-                    <div class="hero-badge">
-                        <div class="badge-dot"></div>
-                        Beta — Acces anticipé ouvert
-                    </div>
-
-                    <h1 class="hero-title">
-                        <span class="t1">La French Riviera</span>
-                        <span class="t2">t'appartient.</span>
-                    </h1>
-
-                    <p class="hero-sub">
-                        Accède aux meilleurs spots et profite de réductions exclusives
-                        dans tes bars et clubs préférés sur toute la Côte d'Azur.
-                    </p>
-
-                    <form id="glowForm" class="hero-form">
-                        <input type="email" id="emailInput" class="h-input" placeholder="votre@email.com" autocomplete="email" required>
-                        <button type="submit" id="submitBtn" class="h-btn">Rejoindre la liste VIP &rarr;</button>
-                    </form>
-
-                    <div class="sp">
-                        <div class="sp-dot"></div>
-                        <span id="proofText">412 membres ont rejoint cette semaine.</span>
-                    </div>
-                </div>
-
-                <!-- iPhone -->
-                <div class="hero-visual" data-aos="fade-left" data-aos-duration="900" data-aos-delay="150">
-                    <div class="iphone-wrap">
-                        <div class="iphone">
-                            <div class="iphone-notch"></div>
-                            <div class="iphone-screen">
-                                <img src="app-mockup1.PNG" alt="GLOW App" onerror="this.style.background='linear-gradient(135deg,#1a0a2e,#0a0520)'">
-                                <div class="iphone-scan"></div>
-                            </div>
-                            <div class="iphone-vip">&#128081; Membre VIP &middot; Actif</div>
+            <!-- iPhone -->
+            <div class="hero-visual" data-aos="fade-left" data-aos-duration="900" data-aos-delay="150">
+                <div class="iphone-wrap">
+                    <div class="iphone">
+                        <div class="iphone-notch"></div>
+                        <div class="iphone-screen">
+                            <img src="app-mockup1.PNG" alt="GLOW App" onerror="this.style.background='linear-gradient(135deg,#1a0a2e,#0a0520)'">
+                            <div class="iphone-scan"></div>
                         </div>
-                        <div class="fc fc-d"><strong>-20%</strong><span>Sur tes consos</span></div>
-                        <div class="fc fc-l"><span class="ldot"></span><strong>3 clubs actifs</strong></div>
-                        <div class="fc fc-s"><strong>12</strong><span>Spots proches</span></div>
+                        <div class="iphone-vip">&#128081; GLOW+ · Premium Actif</div>
                     </div>
+                    <div class="fc fc-d"><strong>96 spots</strong><span>Bars, clubs & beach</span></div>
+                    <div class="fc fc-l"><span class="ldot"></span><strong>12 amis en ligne</strong></div>
+                    <div class="fc fc-s"><strong>3 stories</strong><span>Aujourd'hui</span></div>
                 </div>
-
-            </div><!-- /hero-bottom -->
+            </div>
 
         </div>
     </div>
@@ -618,13 +522,13 @@
 <!-- MARQUEE -->
 <div class="marquee-section">
     <div class="mq-track">
-        <span class="mq-item">Nice</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
+        <span class="mq-item" style="-webkit-text-stroke-color:rgba(139,92,246,.2);color:rgba(139,92,246,.08)">Nice</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
         <span class="mq-item">Cannes</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
         <span class="mq-item">Monaco</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
         <span class="mq-item">Antibes</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
         <span class="mq-item">Saint-Tropez</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
         <span class="mq-item">Menton</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
-        <span class="mq-item">Nice</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
+        <span class="mq-item" style="-webkit-text-stroke-color:rgba(139,92,246,.2);color:rgba(139,92,246,.08)">Nice</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
         <span class="mq-item">Cannes</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
         <span class="mq-item">Monaco</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
         <span class="mq-item">Antibes</span><span class="mq-sep">&nbsp;&#10022;&nbsp;</span>
@@ -637,28 +541,28 @@
 <section class="steps-section">
     <div class="sw">
         <div style="text-align:center;max-width:600px;margin:0 auto" data-aos="fade-up">
-            <div class="s-tag">Comment ca marche</div>
-            <h2 class="s-title">Simple comme<br>une entree VIP</h2>
-            <p class="s-sub">Trois etapes. Zero friction. Juste la nuit.</p>
+            <div class="s-tag">Comment ça marche</div>
+            <h2 class="s-title">Ta vie nocturne,<br>en 3 étapes</h2>
+            <p class="s-sub">Crée ton profil, explore, connecte-toi. C'est tout.</p>
         </div>
         <div class="steps-grid">
             <div class="step-card" data-aos="fade-up" data-aos-delay="0">
                 <div class="step-num">01</div>
-                <div class="step-ico">&#128506;</div>
-                <h3>Explore la carte</h3>
-                <p>Tous les bars, clubs et beach clubs de la Cote d'Azur en temps reel. Tu vois ou ca pulse, ou les gens sont, ou aller maintenant.</p>
+                <div class="step-ico">&#128100;</div>
+                <h3>Crée ton profil</h3>
+                <p>Inscris-toi en 30 secondes avec ton email, Google ou Apple. Personnalise ton avatar, ajoute ta bio et ta ville. Ton espace nocturne est prêt.</p>
             </div>
             <div class="step-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="step-num">02</div>
-                <div class="step-ico">&#128179;</div>
-                <h3>Active ton Premium</h3>
-                <p>Un abonnement unique. Des reductions immediates. Ton QR code membre se genere en 10 secondes directement sur l'app.</p>
+                <div class="step-ico">&#127758;</div>
+                <h3>Explore la carte</h3>
+                <p>96 bars, clubs et beach clubs à Nice sur une carte interactive. Vois où tes amis sont, quels spots sont tendance, et les événements du soir en temps réel.</p>
             </div>
             <div class="step-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="step-num">03</div>
-                <div class="step-ico">&#10024;</div>
-                <h3>Scanne, profite, repete</h3>
-                <p>Presente ton QR code en caisse ou a l'entree. La reduction s'applique instantanement. Tu es sur la liste.</p>
+                <div class="step-ico">&#128172;</div>
+                <h3>Connecte-toi</h3>
+                <p>Suis tes amis, partage des stories éphémères de tes soirées, discute en temps réel. Passe en GLOW+ pour des réductions exclusives chez nos partenaires.</p>
             </div>
         </div>
     </div>
@@ -669,12 +573,12 @@
     <div class="sw">
         <div style="text-align:center;max-width:600px;margin:0 auto" data-aos="fade-up">
             <div class="s-tag">Les Features</div>
-            <h2 class="s-title">Tout ce qu'il te faut<br>pour dominer la nuit</h2>
+            <h2 class="s-title">Tout ce qu'il te faut<br>pour vivre la nuit</h2>
         </div>
 
         <div class="bento-grid">
 
-            <!-- B1 : Map -->
+            <!-- B1 : Carte interactive (feature principale) -->
             <div class="bento-card bb1 bmap" data-aos="fade-up" data-aos-delay="0">
                 <div class="map-vis">
                     <div class="mdot" style="top:38%;left:30%"></div>
@@ -682,46 +586,72 @@
                     <div class="mdot" style="top:28%;left:62%"></div>
                     <div class="mdot" style="top:65%;left:74%"></div>
                     <div class="mdot" style="top:44%;left:84%"></div>
+                    <div class="mdot" style="top:20%;left:45%"></div>
                     <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:.06" xmlns="http://www.w3.org/2000/svg">
                         <defs><pattern id="g" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#8B5CF6" stroke-width=".5"/></pattern></defs>
                         <rect width="100%" height="100%" fill="url(#g)"/>
                     </svg>
                 </div>
                 <div class="bov">
-                    <div class="blabel">&#128506; Carte Interactive</div>
-                    <div><div class="btitle">Tous les Spots</div><div class="bsub">Nice &middot; Cannes &middot; Monaco &middot; Antibes &middot; Saint-Tropez</div></div>
+                    <div class="blabel">&#127758; Carte Interactive Mapbox</div>
+                    <div><div class="btitle">96 Spots en Temps Réel</div><div class="bsub">Bars, clubs & beach clubs à Nice · Filtres par ambiance, musique & services</div></div>
                 </div>
             </div>
 
-            <!-- B2 : Discount -->
-            <div class="bento-card bpremium" data-aos="fade-up" data-aos-delay="100">
-                <div class="bp-inner">
-                    <div class="blabel" style="border-color:rgba(245,158,11,.4);color:var(--gold-lt)">&#128081; Avantage Premium</div>
+            <!-- B2 : Social — Stories & Profils -->
+            <div class="bento-card bsocial" data-aos="fade-up" data-aos-delay="100" style="background:linear-gradient(135deg, rgba(139,47,201,.25), rgba(78,42,132,.1));">
+                <div style="position:absolute;inset:0;z-index:2;padding:28px;display:flex;flex-direction:column;justify-content:space-between;">
+                    <div class="blabel" style="border-color:rgba(224,170,255,.3);color:#E0AAFF">&#128248; Réseau Social</div>
                     <div>
-                        <div class="bp-pct">-20%</div>
-                        <div class="bp-label">Sur toutes tes consos</div>
-                        <div class="bp-sub">Entree VIP offerte certains soirs</div>
-                        <div class="bp-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                        <div style="display:flex;gap:12px;margin-bottom:16px;">
+                            <div style="width:56px;height:56px;border-radius:50%;border:2px solid var(--electric);display:flex;align-items:center;justify-content:center;background:rgba(139,92,246,.15);font-size:24px;">&#128100;</div>
+                            <div style="width:56px;height:56px;border-radius:50%;border:2px solid var(--neon);display:flex;align-items:center;justify-content:center;background:rgba(167,139,250,.1);font-size:24px;">&#128100;</div>
+                            <div style="width:56px;height:56px;border-radius:50%;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.04);font-size:24px;">&#128100;</div>
+                            <div style="width:56px;height:56px;border-radius:50%;border:2px dashed rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--muted);">+</div>
+                        </div>
+                        <div class="btitle" style="font-size:22px;">Stories & Highlights</div>
+                        <div class="bsub">Partage tes soirées · Suis tes amis · Crée des highlights permanents</div>
                     </div>
                 </div>
             </div>
 
-            <!-- B3 : Beach Club -->
-            <div class="bento-card" data-aos="fade-up" data-aos-delay="150">
-                <img src="beach-club.png" alt="Beach Club" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop'">
-                <div class="bov">
-                    <div class="blabel">&#127958; Beach Clubs</div>
-                    <div><div class="btitle">Pieds dans l'eau</div><div class="bsub">Le luxe accessible.</div></div>
+            <!-- B3 : Chat en temps réel -->
+            <div class="bento-card" data-aos="fade-up" data-aos-delay="150" style="background:linear-gradient(135deg, rgba(0,229,255,.08), rgba(78,42,132,.15));">
+                <div style="position:absolute;inset:0;z-index:2;padding:28px;display:flex;flex-direction:column;justify-content:space-between;">
+                    <div class="blabel" style="border-color:rgba(0,229,255,.3);color:rgba(0,229,255,.8)">&#128172; Chat</div>
+                    <div>
+                        <div style="margin-bottom:14px;">
+                            <div style="display:flex;flex-direction:column;gap:8px;">
+                                <div style="align-self:flex-start;max-width:75%;padding:10px 14px;border-radius:16px 16px 16px 4px;background:rgba(255,255,255,.06);font-size:13px;color:rgba(255,255,255,.7);">On se retrouve où ce soir ? 🌙</div>
+                                <div style="align-self:flex-end;max-width:75%;padding:10px 14px;border-radius:16px 16px 4px 16px;background:rgba(139,47,201,.3);font-size:13px;color:#fff;">Au Shapko, rdv 23h ! 🔥</div>
+                                <div style="align-self:flex-start;max-width:75%;padding:10px 14px;border-radius:16px 16px 16px 4px;background:rgba(255,255,255,.06);font-size:13px;color:rgba(255,255,255,.7);">Parfait j'arrive 🎉</div>
+                            </div>
+                        </div>
+                        <div class="btitle" style="font-size:22px;">Messages Temps Réel</div>
+                        <div class="bsub">Texte, audio, images · Messages éphémères 24h</div>
+                    </div>
                 </div>
             </div>
 
-            <!-- B4 : QR Code -->
-            <div class="bento-card bb4 bqr" data-aos="fade-up" data-aos-delay="200">
+            <!-- B4 : Events & Tickets -->
+            <div class="bento-card bb4" data-aos="fade-up" data-aos-delay="200">
+                <img src="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=800&auto=format&fit=crop" alt="Events">
+                <div class="bov">
+                    <div class="blabel">&#127925; Événements & Tickets</div>
+                    <div>
+                        <div class="btitle">Feed Events</div>
+                        <div class="bsub">Soirées, DJ sets, événements privés · Réserve en un tap · Retrouve tes tickets dans l'app</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- B5 : QR Premium -->
+            <div class="bento-card bqr" data-aos="fade-up" data-aos-delay="250">
                 <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(78,42,132,.35),transparent 65%);z-index:0"></div>
                 <div class="qr-scan"></div>
                 <div class="qr-inner">
                     <div class="qr-frame">
-                        <svg viewBox="0 0 21 21" style="width:106px;height:106px;display:block" xmlns="http://www.w3.org/2000/svg">
+                        <svg viewBox="0 0 21 21" style="width:90px;height:90px;display:block" xmlns="http://www.w3.org/2000/svg">
                             <rect width="21" height="21" fill="#fff"/>
                             <rect x="1" y="1" width="7" height="7" fill="#050508"/>
                             <rect x="2" y="2" width="5" height="5" fill="#fff"/>
@@ -732,43 +662,32 @@
                             <rect x="1" y="13" width="7" height="7" fill="#050508"/>
                             <rect x="2" y="14" width="5" height="5" fill="#fff"/>
                             <rect x="3" y="15" width="3" height="3" fill="#050508"/>
-                            <rect x="9" y="1" width="1" height="1" fill="#050508"/>
-                            <rect x="11" y="1" width="1" height="1" fill="#050508"/>
-                            <rect x="9" y="3" width="2" height="1" fill="#050508"/>
-                            <rect x="10" y="5" width="1" height="2" fill="#050508"/>
                             <rect x="9" y="9" width="1" height="1" fill="#4E2A84"/>
                             <rect x="11" y="9" width="1" height="1" fill="#4E2A84"/>
-                            <rect x="13" y="9" width="1" height="2" fill="#050508"/>
-                            <rect x="15" y="9" width="2" height="1" fill="#050508"/>
-                            <rect x="9" y="11" width="3" height="1" fill="#050508"/>
-                            <rect x="13" y="11" width="1" height="3" fill="#050508"/>
-                            <rect x="15" y="11" width="1" height="1" fill="#050508"/>
-                            <rect x="17" y="11" width="3" height="1" fill="#050508"/>
-                            <rect x="9" y="13" width="1" height="3" fill="#050508"/>
-                            <rect x="11" y="13" width="2" height="1" fill="#050508"/>
-                            <rect x="15" y="13" width="1" height="1" fill="#050508"/>
-                            <rect x="17" y="13" width="1" height="3" fill="#050508"/>
-                            <rect x="11" y="15" width="1" height="3" fill="#050508"/>
-                            <rect x="13" y="15" width="1" height="1" fill="#050508"/>
-                            <rect x="15" y="17" width="3" height="1" fill="#050508"/>
-                            <rect x="19" y="15" width="1" height="3" fill="#050508"/>
                         </svg>
                     </div>
-                    <div class="qr-title">Ta Carte Membre GLOW</div>
-                    <div class="qr-sub">Scanne en caisse &middot; Reduction instantanee &middot; Partout sur la Riviera</div>
+                    <div class="qr-title">QR Code GLOW+</div>
+                    <div class="qr-sub">Signé HMAC · Expire en 60s · Scan par le staff</div>
                     <div class="qr-tags">
-                        <span class="qtag-v">MEMBRE VIP</span>
-                        <span class="qtag-a">&#9679; ACTIF</span>
+                        <span class="qtag-v">PREMIUM</span>
+                        <span class="qtag-a">&#9679; VÉRIFIÉ</span>
                     </div>
                 </div>
             </div>
 
-            <!-- B5 : Nightlife -->
-            <div class="bento-card" data-aos="fade-up" data-aos-delay="250">
-                <img src="https://images.unsplash.com/photo-1566737236500-c8ac43014a67?q=80&w=800&auto=format&fit=crop" alt="Nightlife">
-                <div class="bov">
-                    <div class="blabel">&#127925; Nightlife</div>
-                    <div><div class="btitle">Live Events</div><div class="bsub">Les meilleurs sets de l'ete.</div></div>
+            <!-- B6 : Profil & Followers -->
+            <div class="bento-card" data-aos="fade-up" data-aos-delay="300" style="background:linear-gradient(135deg, rgba(245,158,11,.1), rgba(78,42,132,.15));">
+                <div style="position:absolute;inset:0;z-index:2;padding:28px;display:flex;flex-direction:column;justify-content:space-between;">
+                    <div class="blabel" style="border-color:rgba(245,158,11,.3);color:var(--gold-lt)">&#128081; Profil Complet</div>
+                    <div>
+                        <div style="display:flex;gap:28px;margin-bottom:14px;">
+                            <div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:#fff;">142</div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Followers</div></div>
+                            <div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:#fff;">89</div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Following</div></div>
+                            <div style="text-align:center;"><div style="font-size:28px;font-weight:900;color:var(--gold-lt);">7</div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;">Events</div></div>
+                        </div>
+                        <div class="btitle" style="font-size:22px;">Ton Univers</div>
+                        <div class="bsub">Avatar personnalisable · Bio · Ville · Followers & following · Highlights</div>
+                    </div>
                 </div>
             </div>
 
@@ -780,16 +699,16 @@
 <section class="showcase-section">
     <div class="sw">
         <div class="showcase-inner" data-aos="fade-up">
-            <img class="showcase-img" src="beach-club.png" alt="Beach Club Cote d'Azur" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1400&auto=format&fit=crop'">
+            <img class="showcase-img" src="beach-club.png" alt="Beach Club Côte d'Azur" onerror="this.src='https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=1400&auto=format&fit=crop'">
             <div class="showcase-ov">
                 <div style="max-width:560px">
-                    <div class="s-tag" style="margin-bottom:20px">La Riviera Premium</div>
-                    <h2>La meme nuit.<br>Mais en <span>version Gold.</span></h2>
-                    <p>Des partenaires tries sur le volet. Des experiences que tu ne trouveras nulle part ailleurs. GLOW, c'est ta carte d'invitation permanente.</p>
+                    <div class="s-tag" style="margin-bottom:20px">L'expérience Complète</div>
+                    <h2>Ta vie nocturne.<br>En mode <span>GLOW.</span></h2>
+                    <p>96 spots référencés à Nice. Des stories entre amis, du chat en temps réel, un feed d'événements et des réductions exclusives avec GLOW+. Tout dans une seule app.</p>
                     <div class="stats">
-                        <div><div class="stat-num"><span>50+</span></div><div class="stat-lbl">Etablissements</div></div>
-                        <div><div class="stat-num"><span>5</span></div><div class="stat-lbl">Villes</div></div>
-                        <div><div class="stat-num"><span>-20%</span></div><div class="stat-lbl">Garanti</div></div>
+                        <div><div class="stat-num"><span>96</span></div><div class="stat-lbl">Spots à Nice</div></div>
+                        <div><div class="stat-num"><span>24h</span></div><div class="stat-lbl">Stories éphémères</div></div>
+                        <div><div class="stat-num"><span>Chat</span></div><div class="stat-lbl">Temps réel</div></div>
                     </div>
                 </div>
             </div>
@@ -802,35 +721,66 @@
     <div class="p-glow"></div>
     <div class="sw">
         <div style="text-align:center;max-width:500px;margin:0 auto 60px" data-aos="fade-up">
-            <div class="s-tag">Tarif</div>
-            <h2 class="s-title">Rentabilise des<br>la premiere sortie.</h2>
+            <div class="s-tag">Tarifs</div>
+            <h2 class="s-title">L'app est gratuite.<br>GLOW+ est optionnel.</h2>
+            <p class="s-sub" style="margin-top:10px">Profite de toutes les features sociales gratuitement. Passe en GLOW+ pour les réductions et avantages exclusifs.</p>
         </div>
-        <div class="pricing-wrap" data-aos="fade-up" data-aos-delay="100">
-            <div class="pricing-card">
-                <div class="pc-pop">&#10022; Le plus populaire</div>
-                <div class="pc-icon">&#128081;</div>
-                <div class="pc-name">GLOW PREMIUM</div>
-                <div class="pc-hl">L'abonnement qui se paie<br><span>des la premiere sortie</span></div>
+
+        <!-- 2 cards side by side -->
+        <div style="display:flex;gap:24px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1">
+
+            <!-- Free -->
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="0" style="border-color:var(--glass-bdr);box-shadow:0 40px 80px rgba(0,0,0,.4);max-width:380px;">
+                <div class="pc-icon">&#128242;</div>
+                <div class="pc-name">GLOW GRATUIT</div>
+                <div class="pc-hl">Toutes les features sociales<br><span>sans rien payer</span></div>
                 <div class="pc-price">
                     <span class="pc-eur">&euro;</span>
-                    <span class="pc-amt">9</span>
+                    <span class="pc-amt">0</span>
+                </div>
+                <div style="font-size:14px;color:var(--muted);margin-bottom:32px">Pour toujours</div>
+                <ul class="pc-feats">
+                    <li><div class="pcheck">&#10003;</div>Carte interactive · 96 spots à Nice</li>
+                    <li><div class="pcheck">&#10003;</div>Stories éphémères &amp; highlights</li>
+                    <li><div class="pcheck">&#10003;</div>Chat en temps réel avec tes amis</li>
+                    <li><div class="pcheck">&#10003;</div>Profil, followers &amp; following</li>
+                    <li><div class="pcheck">&#10003;</div>Feed événements &amp; réservation de tickets</li>
+                </ul>
+                <form id="glowFreeForm">
+                    <input type="email" id="freeEmail" class="h-input" placeholder="votre@email.com" style="margin-bottom:14px" required>
+                    <button type="submit" id="freeBtn" class="pc-btn" style="background:var(--glass-bg);border:1px solid var(--glass-bdr);box-shadow:none;">S'inscrire gratuitement &rarr;</button>
+                </form>
+                <p class="pc-note">&#10003; Aucune carte bancaire requise</p>
+            </div>
+
+            <!-- GLOW+ -->
+            <div class="pricing-card" data-aos="fade-up" data-aos-delay="150" style="max-width:380px;">
+                <div class="pc-pop">&#10022; Recommandé</div>
+                <div class="pc-icon">&#128081;</div>
+                <div class="pc-name">GLOW+</div>
+                <div class="pc-hl">Réductions exclusives &amp; avantages<br><span>chez nos partenaires à Nice</span></div>
+                <div class="pc-price">
+                    <span class="pc-eur">&euro;</span>
+                    <span class="pc-amt">6</span>
+                    <span style="font-size:36px;font-weight:900;color:#ccc;padding-bottom:6px">,99</span>
                     <span class="pc-per">/ mois</span>
                 </div>
-                <div class="pc-roi">&#128161; 1 verre a -20% = 2&euro; economies. L'abo est amorti en 5 verres.</div>
+                <div class="pc-roi">&#128161; Amorti en une seule sortie grâce aux réductions</div>
                 <ul class="pc-feats">
-                    <li><div class="pcheck pgold">&#10022;</div>Carte membre QR Code numerique</li>
-                    <li><div class="pcheck">&#10003;</div>-20% sur les consommations chez tous les partenaires</li>
-                    <li><div class="pcheck">&#10003;</div>Entrees VIP offertes certains soirs</li>
-                    <li><div class="pcheck">&#10003;</div>Carte interactive de toute la Cote d'Azur</li>
-                    <li><div class="pcheck">&#10003;</div>Acces aux evenements prives &amp; soirees exclusives</li>
-                    <li><div class="pcheck pgold">&#10022;</div>Disponible Nice &middot; Cannes &middot; Monaco &middot; Antibes</li>
+                    <li><div class="pcheck pgold">&#10022;</div>Tout le plan Gratuit inclus</li>
+                    <li><div class="pcheck">&#10003;</div>Réductions négociées chez les partenaires</li>
+                    <li><div class="pcheck">&#10003;</div>QR Code premium sécurisé (HMAC)</li>
+                    <li><div class="pcheck">&#10003;</div>Entrées VIP offertes certains soirs</li>
+                    <li><div class="pcheck">&#10003;</div>Accès aux soirées privées &amp; events exclusifs</li>
+                    <li><div class="pcheck pgold">&#10022;</div>3 tiers : Plus · VIP · Ultra</li>
                 </ul>
                 <form id="pricingForm">
                     <input type="email" id="pricingEmail" class="h-input" placeholder="votre@email.com" style="margin-bottom:14px" required>
-                    <button type="submit" id="pricingBtn" class="pc-btn">Rejoindre la liste VIP &rarr;</button>
+                    <button type="submit" id="pricingBtn" class="pc-btn">Rejoindre la liste GLOW+ &rarr;</button>
                 </form>
-                <p class="pc-note">&#10003; Sans engagement &middot; Resiliation en 1 clic &middot; Acces immediat au lancement</p>
+                <p class="pc-note">&#10003; Sans engagement · Résiliation en 1 clic · Accès immédiat au lancement</p>
             </div>
+
         </div>
     </div>
 </section>
@@ -840,7 +790,7 @@
     <div class="fw">GLOW</div>
     <div style="position:relative;z-index:1">
         <div class="f-logo">GLOW</div>
-        <div class="f-tag">La French Riviera t'appartient.</div>
+        <div class="f-tag">La nuit niçoise t'appartient.</div>
         <div class="f-links">
             <a href="#" class="f-link">Instagram</a>
             <a href="#" class="f-link">TikTok</a>
@@ -937,10 +887,8 @@ if(!IS_TOUCH){
             const sy=window.scrollY;
             const ht=document.querySelector('.hero-text');
             const hv=document.querySelector('.hero-visual');
-            const hs=document.getElementById('splineContainer');
             if(ht)ht.style.transform='translateY('+(sy*-.1)+'px)';
             if(hv)hv.style.transform='translateY('+(sy*.07)+'px)';
-            if(hs&&sy<800)hs.style.transform='perspective(1000px) translateY('+(sy*-.06)+'px)';
             ticking=false;
         });ticking=true;}
     });
@@ -962,13 +910,13 @@ function validateEmail(v){
 }
 function setSuccess(b,i,proofId){
     b.classList.remove('err');b.classList.add('success');
-    b.textContent='Bienvenue dans le cercle VIP !';
+    b.textContent='Bienvenue sur GLOW ! 🎉';
     i.value='';i.disabled=true;
-    if(proofId){const el=document.getElementById(proofId);if(el)el.textContent='Tu es sur la liste !';}
+    if(proofId){const el=document.getElementById(proofId);if(el)el.textContent='Tu es sur la liste d\'attente !';}
 }
 function setError(b,i,msg){
     b.classList.add('err');i.classList.add('error');b.textContent=msg;
-    setTimeout(()=>{b.classList.remove('err');i.classList.remove('error');b.textContent='Rejoindre la liste VIP \u2192';},3000);
+    setTimeout(()=>{b.classList.remove('err');i.classList.remove('error');b.textContent='Rejoindre GLOW \u2192';},3000);
 }
 
 // Hero form
@@ -983,7 +931,7 @@ hForm.addEventListener('submit',e=>{
     hBtn.textContent='Validation...';hBtn.style.opacity='.7';
     setTimeout(()=>{hBtn.style.opacity='1';setSuccess(hBtn,hInput,'proofText');},1500);
 });
-hInput.addEventListener('input',()=>{hInput.classList.remove('error');if(hBtn.classList.contains('err')){hBtn.classList.remove('err');hBtn.textContent='Rejoindre la liste VIP \u2192';}});
+hInput.addEventListener('input',()=>{hInput.classList.remove('error');if(hBtn.classList.contains('err')){hBtn.classList.remove('err');hBtn.textContent='Rejoindre GLOW \u2192';}});
 
 // Pricing form
 const pForm=document.getElementById('pricingForm');
@@ -997,88 +945,23 @@ pForm.addEventListener('submit',e=>{
     pBtn.textContent='Validation...';pBtn.style.opacity='.7';
     setTimeout(()=>{pBtn.style.opacity='1';setSuccess(pBtn,pEmail,null);},1500);
 });
-pEmail.addEventListener('input',()=>{pEmail.classList.remove('error');if(pBtn.classList.contains('err')){pBtn.classList.remove('err');pBtn.textContent='Rejoindre la liste VIP \u2192';}});
+pEmail.addEventListener('input',()=>{pEmail.classList.remove('error');if(pBtn.classList.contains('err')){pBtn.classList.remove('err');pBtn.textContent='Rejoindre la liste GLOW+ \u2192';}});
 
-// =====================================================
-// SPLINE 3D — INTERACTIVE MANAGEMENT
-// =====================================================
-(function initSpline() {
-    const splineContainer = document.getElementById('splineContainer');
-    const splineViewer = document.getElementById('splineViewer');
-    const splineLoader = document.getElementById('splineLoader');
-    const splineHint = document.getElementById('splineHint');
-    if (!splineViewer || !splineContainer) return;
-
-    // 1. Loading state — hide loader when Spline is ready
-    let loadTimeout = setTimeout(() => {
-        // Fallback: hide loader after 8s even if load event doesn't fire
-        if (splineLoader) splineLoader.classList.add('loaded');
-    }, 8000);
-
-    splineViewer.addEventListener('load', () => {
-        clearTimeout(loadTimeout);
-        if (splineLoader) splineLoader.classList.add('loaded');
+// Free form
+const fForm=document.getElementById('glowFreeForm');
+const fBtn=document.getElementById('freeBtn');
+const fEmail=document.getElementById('freeEmail');
+if(fForm){
+    fForm.addEventListener('submit',e=>{
+        e.preventDefault();
+        const v=fEmail.value.toLowerCase().trim();
+        const err=validateEmail(v);
+        if(err){setError(fBtn,fEmail,err);return;}
+        fBtn.textContent='Validation...';fBtn.style.opacity='.7';
+        setTimeout(()=>{fBtn.style.opacity='1';fBtn.classList.add('success');fBtn.textContent='Bienvenue ! Tu es inscrit(e) !';fEmail.value='';fEmail.disabled=true;},1500);
     });
-
-    // 2. Hide interaction hint on first interaction
-    let hintDismissed = false;
-    function dismissHint() {
-        if (hintDismissed || !splineHint) return;
-        hintDismissed = true;
-        splineHint.style.opacity = '0';
-        setTimeout(() => { splineHint.style.display = 'none'; }, 400);
-    }
-    splineContainer.addEventListener('mousedown', dismissHint);
-    splineContainer.addEventListener('touchstart', dismissHint, { passive: true });
-
-    // 3. Subtle parallax tilt on mouse move (desktop) — adds depth feeling
-    if (!IS_TOUCH) {
-        splineContainer.addEventListener('mousemove', (e) => {
-            const rect = splineContainer.getBoundingClientRect();
-            const x = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5 to 0.5
-            const y = (e.clientY - rect.top) / rect.height - 0.5;
-            splineContainer.style.transform = `perspective(1000px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg)`;
-        });
-        splineContainer.addEventListener('mouseleave', () => {
-            splineContainer.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg)';
-            splineContainer.style.transition = 'transform .5s cubic-bezier(.16,1,.3,1)';
-            setTimeout(() => { splineContainer.style.transition = ''; }, 500);
-        });
-    }
-
-    // 4. IntersectionObserver — pause/resume Spline for performance
-    if ('IntersectionObserver' in window) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    splineViewer.style.visibility = 'visible';
-                    splineViewer.style.willChange = 'auto';
-                } else {
-                    // When out of viewport, reduce GPU usage
-                    splineViewer.style.visibility = 'hidden';
-                    splineViewer.style.willChange = 'auto';
-                }
-            });
-        }, { threshold: 0.05, rootMargin: '100px' });
-        observer.observe(splineContainer);
-    }
-
-    // 5. Mobile: reduce quality hint & smaller container
-    if (IS_TOUCH) {
-        // On mobile, ensure the Spline viewer is responsive
-        splineContainer.style.touchAction = 'pan-y';
-        // Add a gentle glow animation on touch devices instead of mouse tilt
-        let touchActive = false;
-        splineContainer.addEventListener('touchstart', () => {
-            touchActive = true;
-            splineContainer.style.boxShadow = '0 0 60px rgba(139,92,246,.4), 0 20px 80px rgba(78,42,132,.35)';
-        }, { passive: true });
-        splineContainer.addEventListener('touchend', () => {
-            touchActive = false;
-            splineContainer.style.boxShadow = '';
-        }, { passive: true });
-    }
-})();
+    fEmail.addEventListener('input',()=>{fEmail.classList.remove('error');if(fBtn.classList.contains('err')){fBtn.classList.remove('err');fBtn.textContent="S'inscrire gratuitement \u2192";}});
+}
 </script>
 </body>
 </html>
