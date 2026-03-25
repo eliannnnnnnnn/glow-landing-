@@ -200,104 +200,57 @@
         @media (max-width: 1023px) { .sp { justify-content: center; } }
         .sp-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
 
-        /* HERO PHONE MOCKUP */
+        /* HERO VISUAL — Bento grid */
         .hero-visual { flex: 1; display: flex; justify-content: center; align-items: center; }
-        .phone-mockup-wrap {
-            position: relative;
-            width: 280px;
-            animation: phoneFloat 6s ease-in-out infinite;
-        }
-        @media (max-width: 1023px) { .phone-mockup-wrap { width: 240px; } }
-        @media (max-width: 600px)  { .phone-mockup-wrap { width: 210px; } }
-
-        @keyframes phoneFloat {
-            0%,100% { transform: translateY(0); }
-            50%     { transform: translateY(-14px); }
-        }
-
-        /* Glow derrière le phone */
-        .phone-glow {
-            position: absolute;
-            inset: -40px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(139,92,246,.25) 0%, rgba(78,42,132,.08) 50%, transparent 75%);
-            filter: blur(50px);
-            z-index: 0;
-            animation: phoneGlowPulse 4s ease-in-out infinite;
-        }
-        @keyframes phoneGlowPulse {
-            0%,100% { opacity:.5; transform:scale(1); }
-            50%     { opacity:.9; transform:scale(1.05); }
-        }
-
-        /* Device frame */
-        .phone-device {
-            position: relative; z-index: 2;
+        .bento-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
             width: 100%;
-            aspect-ratio: 9 / 19.5;
-            border-radius: 40px;
-            background: #1a1a2e;
-            border: 3px solid rgba(255,255,255,.1);
-            box-shadow:
-                0 30px 80px -15px rgba(0,0,0,.7),
-                0 0 0 1px rgba(255,255,255,.04),
-                0 0 60px rgba(139,92,246,.15);
-            overflow: hidden;
+            max-width: 400px;
         }
-        @media (max-width: 600px) {
-            .phone-device { border-radius: 32px; border-width: 2.5px; }
-        }
+        @media (max-width: 1023px) { .bento-grid { max-width: 360px; } }
+        @media (max-width: 600px)  { .bento-grid { max-width: 100%; gap: 10px; } }
 
-        /* Dynamic island */
-        .phone-notch {
-            position: absolute; top: 10px; left: 50%;
-            transform: translateX(-50%);
-            width: 90px; height: 26px;
-            background: #000;
-            border-radius: 20px;
-            z-index: 10;
+        .bento-card {
+            padding: 28px 24px;
+            border-radius: 22px;
+            background: var(--bg2);
+            border: 1px solid var(--glass-bdr);
+            transition: border-color .3s, transform .3s;
+            position: relative; overflow: hidden;
         }
-        @media (max-width: 600px) {
-            .phone-notch { width: 75px; height: 22px; top: 8px; }
+        .bento-card:hover {
+            border-color: rgba(139,92,246,.3);
+            transform: translateY(-2px);
         }
+        .bento-card.span-2 { grid-column: span 2; }
 
-        /* Screen carousel */
-        .phone-screen {
-            position: absolute; inset: 0;
-            overflow: hidden;
+        .bento-icon {
+            width: 40px; height: 40px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 14px; font-size: 18px;
         }
-        .screen-track {
-            display: flex;
-            height: 100%;
-            animation: screenSlide 18s ease-in-out infinite;
+        .bento-value {
+            font-size: 32px; font-weight: 900; letter-spacing: -1.5px;
+            line-height: 1; margin-bottom: 4px;
         }
-        .screen-track img {
-            width: 100%; height: 100%;
-            object-fit: cover;
-            flex-shrink: 0;
+        .bento-label {
+            font-size: 13px; color: var(--muted); font-weight: 500;
         }
-        @keyframes screenSlide {
-            0%,12%    { transform: translateX(0); }
-            16.66%,28.66%  { transform: translateX(-100%); }
-            33.33%,45.33%  { transform: translateX(-200%); }
-            50%,62%        { transform: translateX(-300%); }
-            66.66%,78.66%  { transform: translateX(-400%); }
-            83.33%,95.33%  { transform: translateX(-500%); }
-            100%           { transform: translateX(0); }
+        .bento-row {
+            display: flex; align-items: center; gap: 12px;
         }
-
-        /* Reflet sur le phone */
-        .phone-reflection {
-            position: absolute; inset: 0; z-index: 5;
-            background: linear-gradient(
-                135deg,
-                rgba(255,255,255,.06) 0%,
-                transparent 40%,
-                transparent 60%,
-                rgba(255,255,255,.03) 100%
-            );
-            pointer-events: none;
-            border-radius: 38px;
+        .bento-row .bento-icon { margin-bottom: 0; }
+        .bento-cities {
+            display: flex; gap: 6px; margin-top: 14px; flex-wrap: wrap;
+        }
+        .bento-city {
+            padding: 5px 12px; border-radius: 99px;
+            background: rgba(255,255,255,.04);
+            border: 1px solid rgba(255,255,255,.06);
+            font-size: 11px; font-weight: 600;
+            color: rgba(255,255,255,.5);
         }
 
 
@@ -307,8 +260,41 @@
         .s-title { font-size: clamp(28px, 4.5vw, 50px); font-weight: 900; letter-spacing: -2px; line-height: 1.1; margin-bottom: 12px; }
         .s-sub { font-size: 17px; color: var(--muted); line-height: 1.6; }
 
+        /* SCREENSHOTS */
+        .phones-section { padding: 80px 0 60px; overflow: hidden; }
+        .phones-belt {
+            display: flex; gap: 16px; margin-top: 44px;
+            animation: phonesBelt 35s linear infinite;
+            width: max-content;
+        }
+        @keyframes phonesBelt { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        .phone-3d {
+            width: 170px; height: 350px; border-radius: 28px; overflow: hidden; flex-shrink: 0;
+            background: #0f0f1a;
+            border: 1.5px solid rgba(255,255,255,.06);
+            box-shadow: 0 20px 50px -10px rgba(0,0,0,.6);
+            transition: transform .4s ease, border-color .3s;
+            position: relative;
+        }
+        .phone-3d img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .phone-3d:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(139,92,246,.4);
+        }
+        .phone-3d-label {
+            position: absolute; bottom: 12px; left: 50%; transform: translateX(-50%);
+            padding: 4px 12px; border-radius: 8px;
+            background: rgba(5,5,8,.8); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.08);
+            font-size: 10px; font-weight: 700; color: rgba(255,255,255,.5);
+            text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;
+        }
+        @media (max-width: 767px) {
+            .phone-3d { width: 140px; height: 288px; border-radius: 22px; }
+            .phones-belt { gap: 12px; }
+        }
+
         /* FEATURES */
-        .features-section { padding: 80px 0 100px; }
+        .features-section { padding: 40px 0 100px; }
         .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
         @media (max-width: 1023px) { .feat-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 600px)  { .feat-grid { grid-template-columns: 1fr; } }
@@ -424,27 +410,90 @@
             </div>
 
             <div class="hero-visual" data-aos="fade-left" data-aos-duration="800" data-aos-delay="100">
-                <div class="phone-mockup-wrap">
-                    <div class="phone-glow"></div>
-
-                    <div class="phone-device">
-                        <div class="phone-notch"></div>
-                        <div class="phone-screen">
-                            <div class="screen-track">
-                                <img src="screens/screen1.png" alt="Events">
-                                <img src="screens/screen2.png" alt="Carte">
-                                <img src="screens/screen4.png" alt="Chat">
-                                <img src="screens/screen5.png" alt="Stories">
-                                <img src="screens/screen3.png" alt="Profil">
-                                <img src="screens/screen6.png" alt="GLOW+">
-                            </div>
+                <div class="bento-grid">
+                    <!-- Spots -->
+                    <div class="bento-card" data-aos="fade-up" data-aos-delay="150">
+                        <div class="bento-icon" style="background:rgba(78,42,132,.2); border:1px solid rgba(139,92,246,.2);">
+                            <ion-icon name="map" style="color:var(--neon);"></ion-icon>
                         </div>
-                        <div class="phone-reflection"></div>
+                        <div class="bento-value" style="color:#fff;">120+</div>
+                        <div class="bento-label">Spots référencés</div>
                     </div>
 
+                    <!-- Réductions -->
+                    <div class="bento-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="bento-icon" style="background:rgba(245,158,11,.1); border:1px solid rgba(245,158,11,.2);">
+                            <ion-icon name="pricetag" style="color:var(--gold);"></ion-icon>
+                        </div>
+                        <div class="bento-value" style="color:var(--gold);">−30%</div>
+                        <div class="bento-label">Chez les partenaires</div>
+                    </div>
+
+                    <!-- Gratuit -->
+                    <div class="bento-card" data-aos="fade-up" data-aos-delay="250">
+                        <div class="bento-icon" style="background:rgba(16,185,129,.1); border:1px solid rgba(16,185,129,.2);">
+                            <ion-icon name="sparkles" style="color:var(--green);"></ion-icon>
+                        </div>
+                        <div class="bento-value" style="color:var(--green);">0€</div>
+                        <div class="bento-label">Gratuit, pour toujours</div>
+                    </div>
+
+                    <!-- Events -->
+                    <div class="bento-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="bento-icon" style="background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.2);">
+                            <ion-icon name="flame" style="color:#f87171;"></ion-icon>
+                        </div>
+                        <div class="bento-value" style="color:#f87171;">Live</div>
+                        <div class="bento-label">Events chaque soir</div>
+                    </div>
+
+                    <!-- Villes — span 2 -->
+                    <div class="bento-card span-2" data-aos="fade-up" data-aos-delay="350">
+                        <div class="bento-row">
+                            <div class="bento-icon" style="background:rgba(139,92,246,.1); border:1px solid rgba(139,92,246,.2);">
+                                <ion-icon name="location" style="color:var(--neon);"></ion-icon>
+                            </div>
+                            <div>
+                                <div class="bento-value" style="color:#fff; font-size:24px;">Côte d'Azur</div>
+                                <div class="bento-label">Disponible au lancement</div>
+                            </div>
+                        </div>
+                        <div class="bento-cities">
+                            <span class="bento-city">Nice</span>
+                            <span class="bento-city">Cannes</span>
+                            <span class="bento-city">Monaco</span>
+                            <span class="bento-city">Antibes</span>
+                            <span class="bento-city">Juan-les-Pins</span>
+                            <span class="bento-city">Saint-Tropez</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- APP SCREENSHOTS -->
+<section class="phones-section">
+    <div class="sw">
+        <div style="text-align:center;max-width:520px;margin:0 auto" data-aos="fade-up">
+            <div class="s-tag">L'app</div>
+            <h2 class="s-title">Voilà à quoi ça ressemble</h2>
+        </div>
+    </div>
+    <div class="phones-belt" data-aos="fade-up" data-aos-delay="80">
+        <div class="phone-3d"><img src="screens/screen1.png" alt="Events"><div class="phone-3d-label">Events</div></div>
+        <div class="phone-3d"><img src="screens/screen2.png" alt="Map"><div class="phone-3d-label">Carte</div></div>
+        <div class="phone-3d"><img src="screens/screen3.png" alt="Profile"><div class="phone-3d-label">Profil</div></div>
+        <div class="phone-3d"><img src="screens/screen4.png" alt="Chat"><div class="phone-3d-label">Chat</div></div>
+        <div class="phone-3d"><img src="screens/screen5.png" alt="Stories"><div class="phone-3d-label">Stories</div></div>
+        <div class="phone-3d"><img src="screens/screen6.png" alt="Premium"><div class="phone-3d-label">GLOW+</div></div>
+        <div class="phone-3d"><img src="screens/screen1.png" alt="Events"><div class="phone-3d-label">Events</div></div>
+        <div class="phone-3d"><img src="screens/screen2.png" alt="Map"><div class="phone-3d-label">Carte</div></div>
+        <div class="phone-3d"><img src="screens/screen3.png" alt="Profile"><div class="phone-3d-label">Profil</div></div>
+        <div class="phone-3d"><img src="screens/screen4.png" alt="Chat"><div class="phone-3d-label">Chat</div></div>
+        <div class="phone-3d"><img src="screens/screen5.png" alt="Stories"><div class="phone-3d-label">Stories</div></div>
+        <div class="phone-3d"><img src="screens/screen6.png" alt="Premium"><div class="phone-3d-label">GLOW+</div></div>
     </div>
 </section>
 
