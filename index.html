@@ -486,13 +486,13 @@
     <div class="phones-belt" data-aos="fade-up" data-aos-delay="80">
         <div class="phone-3d"><img src="screens/screen1.png" alt="Events"><div class="phone-3d-label">Events</div></div>
         <div class="phone-3d"><img src="screens/screen2.png" alt="Map"><div class="phone-3d-label">Carte</div></div>
-        <div class="phone-3d"><img src="screens/screen3.png" alt="Profile"><div class="phone-3d-label">Profil</div></div>
+        <div class="phone-3d"><img src="screens/screen3.png" alt="Map"><div class="phone-3d-label">Carte</div></div>
         <div class="phone-3d"><img src="screens/screen4.png" alt="Chat"><div class="phone-3d-label">Chat</div></div>
         <div class="phone-3d"><img src="screens/screen5.png" alt="Stories"><div class="phone-3d-label">Stories</div></div>
         <div class="phone-3d"><img src="screens/screen6.png" alt="Premium"><div class="phone-3d-label">GLOW+</div></div>
         <div class="phone-3d"><img src="screens/screen1.png" alt="Events"><div class="phone-3d-label">Events</div></div>
         <div class="phone-3d"><img src="screens/screen2.png" alt="Map"><div class="phone-3d-label">Carte</div></div>
-        <div class="phone-3d"><img src="screens/screen3.png" alt="Profile"><div class="phone-3d-label">Profil</div></div>
+        <div class="phone-3d"><img src="screens/screen3.png" alt="Map"><div class="phone-3d-label">Carte</div></div>
         <div class="phone-3d"><img src="screens/screen4.png" alt="Chat"><div class="phone-3d-label">Chat</div></div>
         <div class="phone-3d"><img src="screens/screen5.png" alt="Stories"><div class="phone-3d-label">Stories</div></div>
         <div class="phone-3d"><img src="screens/screen6.png" alt="Premium"><div class="phone-3d-label">GLOW+</div></div>
@@ -568,9 +568,9 @@
             <p class="s-sub" style="margin-top:8px">GLOW est gratuit. Les abonnements débloquent des réductions et avantages exclusifs dans les bars et clubs partenaires.</p>
         </div>
 
-        <div class="pricing-grid">
+        <div class="pricing-grid" style="grid-template-columns:1fr;max-width:420px;margin:0 auto;">
             <!-- Glow+ -->
-            <div class="pricing-card" data-aos="fade-up" data-aos-delay="0">
+            <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="0">
                 <div class="pc-name">Glow+</div>
                 <div class="pc-price-row">
                     <span class="pc-price-big">6,99€</span>
@@ -583,43 +583,8 @@
                     <li><div class="pcheck pcheck-green">✓</div>Expérience sans publicité</li>
                     <li><div class="pcheck pcheck-green">✓</div>QR Code perso vérifié</li>
                 </ul>
-                <a href="#hero" class="pc-btn pc-btn-free" style="display:block;text-align:center;text-decoration:none;">S'inscrire →</a>
-            </div>
-
-            <!-- Glow VIP -->
-            <div class="pricing-card featured" data-aos="fade-up" data-aos-delay="80">
-                <div class="pc-pop">Populaire</div>
-                <div class="pc-name" style="margin-top:12px">Glow VIP</div>
-                <div class="pc-price-row">
-                    <span class="pc-price-big">14,99€</span>
-                    <span class="pc-price-per">/ mois</span>
-                </div>
-                <div class="pc-desc">Tous les avantages Glow+ et réductions sur les tables en boîte.</div>
-                <ul class="pc-feats">
-                    <li><div class="pcheck pcheck-gold">✦</div>Tout Glow+ inclus</li>
-                    <li><div class="pcheck pcheck-gold">✦</div>Réductions sur les tables en boîtes partenaires</li>
-                    <li><div class="pcheck pcheck-gold">✦</div>Events privés & soirées GLOW</li>
-                    <li><div class="pcheck pcheck-gold">✦</div>Accès prioritaire aux réservations</li>
-                </ul>
-                <a href="#hero" class="pc-btn pc-btn-plus" style="display:block;text-align:center;text-decoration:none;">Rejoindre VIP →</a>
+                <a href="#hero" class="pc-btn pc-btn-plus" style="display:block;text-align:center;text-decoration:none;">S'inscrire →</a>
                 <p class="pc-note">Sans engagement · Résiliation en 1 clic</p>
-            </div>
-
-            <!-- Glow Black -->
-            <div class="pricing-card" data-aos="fade-up" data-aos-delay="160" style="border-color:rgba(224,176,255,.2);">
-                <div class="pc-name" style="color:#E0B0FF">Glow Black</div>
-                <div class="pc-price-row">
-                    <span class="pc-price-big">100€</span>
-                    <span class="pc-price-per">/ mois</span>
-                </div>
-                <div class="pc-desc">L'expérience ultime : une table offerte par mois dans un club partenaire.</div>
-                <ul class="pc-feats">
-                    <li><div class="pcheck" style="background:rgba(224,176,255,.1);border:1px solid rgba(224,176,255,.25);color:#E0B0FF;">✦</div>Tout Glow VIP inclus</li>
-                    <li><div class="pcheck" style="background:rgba(224,176,255,.1);border:1px solid rgba(224,176,255,.25);color:#E0B0FF;">✦</div>1 table offerte par mois en club partenaire</li>
-                    <li><div class="pcheck" style="background:rgba(224,176,255,.1);border:1px solid rgba(224,176,255,.25);color:#E0B0FF;">✦</div>Conciergerie nightlife dédiée</li>
-                </ul>
-                <a href="#hero" class="pc-btn" style="display:block;text-align:center;text-decoration:none;background:linear-gradient(135deg,#4A0E78,#7B2FBE,#E0B0FF);box-shadow:0 6px 24px rgba(224,176,255,.3);">Rejoindre Black →</a>
-                <p class="pc-note">Sur invitation</p>
             </div>
         </div>
     </div>
@@ -771,6 +736,39 @@ wireForm('glowForm', 'submitBtn', 'emailInput', 'waitlist', 'Rejoindre la liste 
             if (el && !el.dataset.updated) el.textContent = `+${data.count} inscrits avant le lancement`;
         }
     } catch(e) { /* silencieux */ }
+})();
+
+// RENDRE LE CARROUSEL CLIQUABLE — clic avance d'une image et met en pause l'animation
+(function makePhonesBeltClickable(){
+    const belt = document.querySelector('.phones-belt');
+    if (!belt) return;
+    // curseur indiquant que c'est cliquable
+    belt.style.cursor = 'pointer';
+
+    const items = Array.from(belt.querySelectorAll('.phone-3d'));
+    if (!items.length) return;
+
+    const GAP = 16; // doit correspondre au gap CSS
+    let currentIndex = 0;
+    let itemWidth = items[0].getBoundingClientRect().width + GAP;
+
+    function refreshWidths(){
+        if (items[0]) itemWidth = Math.round(items[0].getBoundingClientRect().width + GAP);
+    }
+    window.addEventListener('resize', refreshWidths);
+
+    belt.addEventListener('click', (ev) => {
+        // Empêcher les clics sur d'éventuels liens internes
+        ev.preventDefault();
+        // Stopper l'animation automatique
+        belt.style.animation = 'none';
+        // Avancer d'un élément
+        currentIndex = (currentIndex + 1) % items.length;
+        const translateX = currentIndex * itemWidth;
+        // Appliquer une transition fluide
+        belt.style.transition = 'transform 450ms cubic-bezier(.2,.9,.2,1)';
+        belt.style.transform = `translateX(-${translateX}px)`;
+    });
 })();
 </script>
 </body>
