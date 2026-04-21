@@ -742,34 +742,48 @@ wireForm('glowForm', 'submitBtn', 'emailInput', 'waitlist', 'Rejoindre la liste 
 (function makePhonesBeltClickable(){
     const belt = document.querySelector('.phones-belt');
     if (!belt) return;
-    // curseur indiquant que c'est cliquable
     belt.style.cursor = 'pointer';
 
     const items = Array.from(belt.querySelectorAll('.phone-3d'));
     if (!items.length) return;
 
     const GAP = 16; // doit correspondre au gap CSS
-    let currentIndex = 0;
-    let itemWidth = items[0].getBoundingClientRect().width + GAP;
+    let itemWidth = Math.round(items[0].getBoundingClientRect().width + GAP);
+    const base = Math.max(1, Math.floor(items.length / 2)); // longueur d'une boucle
 
     function refreshWidths(){
         if (items[0]) itemWidth = Math.round(items[0].getBoundingClientRect().width + GAP);
     }
     window.addEventListener('resize', refreshWidths);
 
+    let internalIndex = 0; // position logique (peut dépasser base avant le reset)
+
     belt.addEventListener('click', (ev) => {
-        // Empêcher les clics sur d'éventuels liens internes
         ev.preventDefault();
+        // Bloquer si une animation est déjà en cours
+        if (belt.dataset.animating === '1') return;
+        belt.dataset.animating = '1';
+
         // Stopper l'animation automatique
         belt.style.animation = 'none';
-        // Avancer d'un élément
-        currentIndex = (currentIndex + 1) % items.length;
-        const translateX = currentIndex * itemWidth;
-        // Appliquer une transition fluide
+
+        internalIndex = internalIndex + 1;
         belt.style.transition = 'transform 450ms cubic-bezier(.2,.9,.2,1)';
-        belt.style.transform = `translateX(-${translateX}px)`;
+        belt.style.transform = `translateX(-${internalIndex * itemWidth}px)`;
+
+        belt.addEventListener('transitionend', function handler() {
+            // Si on a atteint la moitié (fin de la boucle visible), on remet sans animation
+            if (internalIndex >= base) {
+                belt.style.transition = 'none';
+                internalIndex = internalIndex % base; // normalement 0
+                belt.style.transform = `translateX(-${internalIndex * itemWidth}px)`;
+            }
+            // Déverrouiller après un court délai
+            setTimeout(() => { belt.dataset.animating = '0'; }, 20);
+        }, { once: true });
     });
 })();
+
 </script>
 </body>
 </html>
