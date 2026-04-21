@@ -738,7 +738,7 @@ wireForm('glowForm', 'submitBtn', 'emailInput', 'waitlist', 'Rejoindre la liste 
     } catch(e) { /* silencieux */ }
 })();
 
-// RENDRE LE CARROUSEL CLIQUABLE — clic avance d'une image et met en pause l'animation
+// RENDRE LE CARROUSEL CLIQUABLE — support clic gauche/droite et normalisation sans boucle infinie
 (function makePhonesBeltClickable(){
     const belt = document.querySelector('.phones-belt');
     if (!belt) return;
@@ -749,37 +749,64 @@ wireForm('glowForm', 'submitBtn', 'emailInput', 'waitlist', 'Rejoindre la liste 
 
     const GAP = 16; // doit correspondre au gap CSS
     let itemWidth = Math.round(items[0].getBoundingClientRect().width + GAP);
-    const base = Math.max(1, Math.floor(items.length / 2)); // longueur d'une boucle
-
-    function refreshWidths(){
-        if (items[0]) itemWidth = Math.round(items[0].getBoundingClientRect().width + GAP);
-    }
+    function refreshWidths(){ if (items[0]) itemWidth = Math.round(items[0].getBoundingClientRect().width + GAP); }
     window.addEventListener('resize', refreshWidths);
 
-    let internalIndex = 0; // position logique (peut dépasser base avant le reset)
+    const total = items.length;
+    // Si la bande est dupliquée pour l'animation, on considère une boucle de taille total/2
+    const loopSize = Math.floor(total / 2) || total;
+
+    let index = 0; // position logique (0 = premier élément)
+    let animating = false;
+
+    // initial state
+    belt.style.transform = `translateX(0px)`;
 
     belt.addEventListener('click', (ev) => {
         ev.preventDefault();
-        // Bloquer si une animation est déjà en cours
-        if (belt.dataset.animating === '1') return;
-        belt.dataset.animating = '1';
+        if (animating) return;
+        animating = true;
 
-        // Stopper l'animation automatique
+        // Stoppe l'animation automatique si présente
         belt.style.animation = 'none';
 
-        internalIndex = internalIndex + 1;
+        const rect = belt.getBoundingClientRect();
+        const clickX = ev.clientX - rect.left;
+        const center = rect.width / 2;
+
+        // Détermine direction selon où l'utilisateur clique
+        const goingPrev = clickX < center;
+
+        // Si on clique à gauche -> précédent, sinon suivant
+        if (goingPrev) {
+            index = index - 1;
+            // Si on sort en-dessous de 0, on replace près de la fin pour transition fluide
+            if (index < 0) {
+                // positionner sans transition à l'équivalent "milieu" puis décrémenter
+                index = index + loopSize;
+                belt.style.transition = 'none';
+                belt.style.transform = `translateX(-${index * itemWidth}px)`;
+                // forcer reflow
+                void belt.offsetWidth;
+                index = index - 1;
+            }
+        } else {
+            index = index + 1;
+        }
+
+        // Appliquer la translation animée
         belt.style.transition = 'transform 450ms cubic-bezier(.2,.9,.2,1)';
-        belt.style.transform = `translateX(-${internalIndex * itemWidth}px)`;
+        belt.style.transform = `translateX(-${index * itemWidth}px)`;
 
         belt.addEventListener('transitionend', function handler() {
-            // Si on a atteint la moitié (fin de la boucle visible), on remet sans animation
-            if (internalIndex >= base) {
+            // Normalise la position pour rester dans la boucle
+            if (loopSize && (index >= loopSize || index < 0)) {
+                index = ((index % loopSize) + loopSize) % loopSize;
                 belt.style.transition = 'none';
-                internalIndex = internalIndex % base; // normalement 0
-                belt.style.transform = `translateX(-${internalIndex * itemWidth}px)`;
+                belt.style.transform = `translateX(-${index * itemWidth}px)`;
             }
-            // Déverrouiller après un court délai
-            setTimeout(() => { belt.dataset.animating = '0'; }, 20);
+            // Petit délai pour éviter double clic instantané
+            setTimeout(() => { animating = false; }, 30);
         }, { once: true });
     });
 })();
