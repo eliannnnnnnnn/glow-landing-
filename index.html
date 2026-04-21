@@ -738,7 +738,7 @@ wireForm('glowForm', 'submitBtn', 'emailInput', 'waitlist', 'Rejoindre la liste 
     } catch(e) { /* silencieux */ }
 })();
 
-// RENDRE LE CARROUSEL CLIQUABLE — support clic gauche/droite et normalisation sans boucle infinie
+// RENDRE LE CARROUSEL CLIQUABLE — gestion manuelle + auto en JS (évite conflit CSS)
 (function makePhonesBeltClickable(){
     const belt = document.querySelector('.phones-belt');
     if (!belt) return;
@@ -747,46 +747,70 @@ wireForm('glowForm', 'submitBtn', 'emailInput', 'waitlist', 'Rejoindre la liste 
     const items = Array.from(belt.querySelectorAll('.phone-3d'));
     if (!items.length) return;
 
-    const GAP = 16; // doit correspondre au gap CSS
+    const GAP = 16;
     let itemWidth = Math.round(items[0].getBoundingClientRect().width + GAP);
     function refreshWidths(){ if (items[0]) itemWidth = Math.round(items[0].getBoundingClientRect().width + GAP); }
     window.addEventListener('resize', refreshWidths);
 
     const total = items.length;
-    // Si la bande est dupliquée pour l'animation, on considère une boucle de taille total/2
-    const loopSize = Math.floor(total / 2) || total;
+    const loopSize = Math.floor(total / 2) || total; // nombre d'éléments uniques
 
-    let index = 0; // position logique (0 = premier élément)
+    let index = 0; // position logique
     let animating = false;
 
-    // initial state
-    belt.style.transform = `translateX(0px)`;
+    // Auto-advance control (JS) — on garde la main complète
+    let autoTimer = null;
+    const AUTO_INTERVAL = 2200; // ms entre étapes
+    function stopAuto(){ if (autoTimer) { clearInterval(autoTimer); autoTimer = null; } }
+    function startAuto(){ stopAuto(); autoTimer = setInterval(() => {
+        if (animating) return;
+        animating = true;
+        index = index + 1;
+        belt.style.transition = 'transform 700ms cubic-bezier(.2,.9,.2,1)';
+        belt.style.transform = `translateX(-${index * itemWidth}px)`;
+        belt.addEventListener('transitionend', function handler(){
+            // normalise
+            if (loopSize && (index >= loopSize || index < 0)) {
+                index = ((index % loopSize) + loopSize) % loopSize;
+                belt.style.transition = 'none';
+                belt.style.transform = `translateX(-${index * itemWidth}px)`;
+            }
+            animating = false;
+        }, { once: true });
+    }, AUTO_INTERVAL); }
 
+    // démarre automatiquement
+    startAuto();
+
+    // helper pour relancer après interaction
+    let resumeTimeout = null;
+    function scheduleRestartAuto(){
+        if (resumeTimeout) clearTimeout(resumeTimeout);
+        stopAuto();
+        resumeTimeout = setTimeout(() => { startAuto(); resumeTimeout = null; }, 3000);
+    }
+
+    // clic gauche/droite selon la moitié du belt
     belt.addEventListener('click', (ev) => {
         ev.preventDefault();
         if (animating) return;
         animating = true;
 
-        // Stoppe l'animation automatique si présente
-        belt.style.animation = 'none';
+        // arrêter l'auto tant qu'on interagit
+        stopAuto();
+        if (resumeTimeout) { clearTimeout(resumeTimeout); resumeTimeout = null; }
 
         const rect = belt.getBoundingClientRect();
         const clickX = ev.clientX - rect.left;
-        const center = rect.width / 2;
+        const centerX = rect.width / 2;
+        const goingPrev = clickX < centerX;
 
-        // Détermine direction selon où l'utilisateur clique
-        const goingPrev = clickX < center;
-
-        // Si on clique à gauche -> précédent, sinon suivant
         if (goingPrev) {
             index = index - 1;
-            // Si on sort en-dessous de 0, on replace près de la fin pour transition fluide
             if (index < 0) {
-                // positionner sans transition à l'équivalent "milieu" puis décrémenter
                 index = index + loopSize;
                 belt.style.transition = 'none';
                 belt.style.transform = `translateX(-${index * itemWidth}px)`;
-                // forcer reflow
                 void belt.offsetWidth;
                 index = index - 1;
             }
@@ -794,23 +818,22 @@ wireForm('glowForm', 'submitBtn', 'emailInput', 'waitlist', 'Rejoindre la liste 
             index = index + 1;
         }
 
-        // Appliquer la translation animée
         belt.style.transition = 'transform 450ms cubic-bezier(.2,.9,.2,1)';
         belt.style.transform = `translateX(-${index * itemWidth}px)`;
 
-        belt.addEventListener('transitionend', function handler() {
-            // Normalise la position pour rester dans la boucle
+        belt.addEventListener('transitionend', function handler(){
             if (loopSize && (index >= loopSize || index < 0)) {
                 index = ((index % loopSize) + loopSize) % loopSize;
                 belt.style.transition = 'none';
                 belt.style.transform = `translateX(-${index * itemWidth}px)`;
             }
-            // Petit délai pour éviter double clic instantané
-            setTimeout(() => { animating = false; }, 30);
+            animating = false;
+            scheduleRestartAuto();
         }, { once: true });
     });
 })();
 
 </script>
+
 </body>
 </html>
